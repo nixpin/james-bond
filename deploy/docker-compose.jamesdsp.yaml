@@ -1,0 +1,24 @@
+services:
+
+  # Headless JamesDSP container example
+  # @TODO: update for full included app
+  jamesdsp-headless:
+      # Build locally because the remote GHCR image is currently private/denied
+      build:
+        context: ./docker/jamesdsp
+      container_name: jamesdsp-headless
+      restart: unless-stopped
+      environment:
+        - PIPEWIRE_RUNTIME_DIR=/run/user/${PUID:-1000}
+        - XDG_CONFIG_HOME=/config-xdg
+      volumes:
+        - ./jamesdsp/config:/config-xdg/jamesdsp
+        - ./jamesdsp/irs:/irs:ro
+        - ./jamesdsp/presets:/presets:ro
+        # Passthrough PipeWire socket
+        - /run/user/${PUID:-1000}/pipewire-0:/run/user/${PUID:-1000}/pipewire-0
+      user: "${PUID:-1000}:${PGID:-1000}"
+      group_add:
+        - audio
+    # This image usually runs JamesDSP in the entrypoint.
+    # It will create a "JamesDSP" filter node in your PipeWire graph.
