@@ -141,7 +141,7 @@ jb-button.w-full {
 }
 
 .card-header {
-  @apply flex items-center gap-2 border-b border-zinc-800 pb-3 -mb-2;
+  @apply flex items-center gap-2 border-b border-zinc-800 pb-3;
 }
 
 .card-indicator {
