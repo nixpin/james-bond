@@ -21,7 +21,7 @@ export class JBSlider extends LitElement {
 
   render() {
     return html`
-      <div class="mb-4">
+      <div>
         <div class="flex justify-between mb-1">
           <label class="text-sm font-medium text-zinc-300">${this.label}</label>
           <span class="text-sm font-mono text-zinc-400">${this.value}${this.unit}</span>

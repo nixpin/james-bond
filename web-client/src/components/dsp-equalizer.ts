@@ -45,10 +45,13 @@ export class DSPEqualizer extends LitElement {
     ];
 
     return html`
-      <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4 col-span-1 md:col-span-2">
-        <h3 class="font-medium mb-4 text-zinc-100">Parametric Equalizer</h3>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-sm col-span-1 md:col-span-2">
+        <header class="flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4">
+          <div class="w-2 h-6 bg-blue-500 rounded-full"></div>
+          <h3 class="font-bold text-zinc-100 tracking-tight text-lg">Parametric Equalizer</h3>
+        </header>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 bg-zinc-800/20 p-4 rounded-xl border border-zinc-800/50">
           <jb-toggle 
             label="Enable" 
             .enabled=${this.config.enabled} 
@@ -70,25 +73,28 @@ export class DSPEqualizer extends LitElement {
           ></jb-select>
         </div>
 
-        <div class="flex items-end justify-between gap-1 overflow-x-auto pb-4 h-64">
+        <div class="flex items-end justify-between gap-2 overflow-x-auto pb-6 h-72 custom-scrollbar">
           ${this.config.bands.map((band, i) => html`
-            <div class="flex flex-col items-center flex-1 min-w-[30px] h-full">
-              <input 
-                type="range" 
-                min="-12" 
-                max="12" 
-                step="0.5" 
-                .value=${this.config.gains[i].toString()}
-                @input=${(e: Event) => this._updateGain(i, parseFloat((e.target as HTMLInputElement).value))}
-                class="w-full h-full vertical-slider bg-zinc-800 rounded appearance-none cursor-pointer accent-blue-500"
-                style="writing-mode: bt-lr; appearance: slider-vertical;"
-              />
-              <span class="text-[10px] text-zinc-500 mt-2 rotate-45 md:rotate-0 whitespace-nowrap">
-                ${band < 1000 ? band : (band / 1000) + 'k'}
-              </span>
-              <span class="text-[10px] font-mono text-blue-400">
-                ${this.config.gains[i]}
-              </span>
+            <div class="flex flex-col items-center flex-1 min-w-[36px] h-full group">
+              <div class="relative flex-1 w-full flex flex-col items-center">
+                <input 
+                  type="range" 
+                  min="-12" 
+                  max="12" 
+                  step="0.5" 
+                  .value=${this.config.gains[i].toString()}
+                  @input=${(e: Event) => this._updateGain(i, parseFloat((e.target as HTMLInputElement).value))}
+                  class="vertical-slider w-2 h-full bg-zinc-800 rounded-full appearance-none cursor-pointer accent-blue-500 hover:bg-zinc-700 transition-colors"
+                />
+              </div>
+              <div class="mt-4 flex flex-col items-center gap-1">
+                <span class="text-[10px] font-bold text-zinc-500 uppercase">
+                  ${band < 1000 ? band : (band / 1000) + 'k'}
+                </span>
+                <span class="text-[11px] font-mono font-bold text-blue-400 bg-blue-500/10 px-1 rounded">
+                  ${this.config.gains[i] > 0 ? '+' : ''}${this.config.gains[i]}
+                </span>
+              </div>
             </div>
           `)}
         </div>

@@ -24,8 +24,11 @@ export class DSPConvolver extends LitElement {
 
   render() {
     return html`
-      <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
-        <h3 class="font-medium mb-4 text-zinc-100">Convolution</h3>
+      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-sm flex flex-col gap-6">
+        <header class="flex items-center gap-2 border-b border-zinc-800 pb-3 -mb-2">
+          <div class="w-2 h-6 bg-blue-500 rounded-full"></div>
+          <h3 class="font-bold text-zinc-100 tracking-tight">Convolution</h3>
+        </header>
         
         <jb-toggle 
           label="Enable" 
@@ -33,9 +36,9 @@ export class DSPConvolver extends LitElement {
           @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
         ></jb-toggle>
 
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-zinc-300 mb-1">Impulse Response File</label>
-          <div class="text-sm text-zinc-500 bg-zinc-800 rounded p-2 overflow-hidden text-ellipsis">
+        <div class="bg-zinc-800/50 rounded-lg p-3 border border-zinc-800">
+          <label class="block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">Impulse Response File</label>
+          <div class="text-sm text-zinc-300 overflow-hidden text-ellipsis whitespace-nowrap font-mono">
             ${this.config.file || 'No file selected'}
           </div>
         </div>

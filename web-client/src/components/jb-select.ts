@@ -18,7 +18,7 @@ export class JBSelect extends LitElement {
 
   render() {
     return html`
-      <div class="mb-4">
+      <div>
         <label class="block text-sm font-medium text-zinc-300 mb-1">${this.label}</label>
         <select 
           .value=${this.value}

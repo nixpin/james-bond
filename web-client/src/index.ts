@@ -70,8 +70,8 @@ export class JamesBondApp extends LitElement {
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                <dsp-bass></dsp-bass>
-               <dsp-master></dsp-master>
                <dsp-tube></dsp-tube>
+               <dsp-master></dsp-master>
                <dsp-convolver></dsp-convolver>
             </div>
           </section>

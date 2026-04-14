@@ -12,7 +12,7 @@ export class JBToggle extends LitElement {
 
   render() {
     return html`
-      <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center justify-between">
         <label class="text-sm font-medium text-zinc-300">${this.label}</label>
         <button 
           @click=${() => this.dispatchEvent(new CustomEvent('change', { detail: !this.enabled }))}

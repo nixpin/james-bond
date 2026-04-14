@@ -12,8 +12,30 @@ body {
   @apply bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased;
 }
 
-/* Base styles for custom components to ensure they behave like block/inline-block elements */
-jb-button, jb-toggle, jb-slider, jb-select {
+/* Base styles for custom components to ensure they behave like block elements */
+jb-toggle, jb-slider, jb-select {
+  @apply block w-full;
+}
+
+jb-button {
+  @apply inline-block;
+}
+
+/* Custom scrollbar for better look */
+.custom-scrollbar::-webkit-scrollbar {
+  @apply w-1.5 h-1.5;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-zinc-900 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-zinc-800 rounded-full hover:bg-zinc-700 transition-colors;
+}
+
+
+jb-button {
   @apply inline-block;
 }
 
