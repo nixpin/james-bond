@@ -17,6 +17,14 @@ jb-toggle, jb-slider, jb-select {
   @apply block w-full;
 }
 
+jb-button {
+  @apply inline-block;
+}
+
+jb-button.w-full {
+  @apply block w-full;
+}
+
 /* Layout Classes */
 .app-container {
   @apply p-4 md:p-6 max-w-5xl mx-auto;
@@ -141,7 +149,6 @@ jb-toggle, jb-slider, jb-select {
   @apply flex overflow-x-auto gap-6 mb-8 bg-zinc-800/20 p-4 rounded-xl border border-zinc-800/50 md:grid md:grid-cols-3 md:overflow-visible;
 }
 
-
 .eq-setting-item {
   @apply flex-none min-w-[120px] md:min-w-0;
 }
@@ -155,20 +162,20 @@ jb-toggle, jb-slider, jb-select {
 }
 
 .eq-visualizer-content {
-  @apply flex items-end justify-start gap-3 overflow-x-auto pb-2 h-80 lg:justify-between lg:gap-2 lg:overflow-visible;
+  @apply flex items-end justify-start gap-3 overflow-x-auto pb-4 h-80 lg:justify-between lg:gap-2 lg:overflow-visible;
   touch-action: pan-x;
 }
 
 .eq-band {
-  @apply flex flex-col items-center flex-none w-10 h-full md:w-12 lg:flex-1 lg:min-w-[36px];
+  @apply flex flex-col items-center flex-none w-12 h-full lg:flex-1 lg:min-w-[36px];
 }
 
 .eq-band-slider-container {
-  @apply relative flex-1 w-full flex flex-col items-center py-2;
+  @apply relative flex-1 w-full flex flex-col items-center py-2 min-h-[200px];
 }
 
 .eq-band-label-container {
-  @apply mt-4 flex flex-col items-center gap-1.5;
+  @apply mt-4 flex flex-col items-center gap-1.5 flex-none;
 }
 
 .eq-band-freq {
@@ -213,7 +220,7 @@ jb-toggle, jb-slider, jb-select {
   @apply border-t border-zinc-800/50 pt-4;
 }
 
-/* Custom Scrollbar Styles (without @apply loop) */
+/* Custom Scrollbar Styles */
 .eq-settings-panel::-webkit-scrollbar,
 .eq-visualizer-content::-webkit-scrollbar,
 ::-webkit-scrollbar {
@@ -247,24 +254,16 @@ jb-toggle, jb-slider, jb-select {
 /* Vertical slider */
 .vertical-slider {
   -webkit-appearance: slider-vertical;
+  appearance: slider-vertical;
   writing-mode: bt-lr;
   touch-action: pan-x;
+  width: 1.5rem;
+  height: 100%;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  @apply accent-blue-500;
 }
+/* No pseudo-element styles for vertical-slider to avoid layout conflicts in vertical mode */
 
-.vertical-slider::-webkit-slider-runnable-track {
-  @apply bg-zinc-800 rounded-full;
-  width: var(--track-width, 4px);
-  margin: 0 auto;
-}
-
-.vertical-slider::-moz-range-track {
-  @apply bg-zinc-800 rounded-full;
-  width: var(--track-width, 4px);
-}
-
-.vertical-slider::-webkit-slider-thumb {
-  @apply bg-blue-500 rounded-full border-2 border-zinc-950 shadow-md;
-  width: 1rem;
-  height: 1rem;
-  margin-top: -0.25rem;
-}

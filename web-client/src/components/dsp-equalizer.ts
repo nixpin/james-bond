@@ -98,8 +98,7 @@ export class DSPEqualizer extends LitElement {
                     .value=${this.config.gains[i].toString()}
                     @input=${(e: Event) => this._onInputGain(i, parseFloat((e.target as HTMLInputElement).value))}
                     @change=${(e: Event) => this._onChangeGain(i, parseFloat((e.target as HTMLInputElement).value))}
-                    class="vertical-slider w-8 h-full bg-transparent appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-colors"
-                    style="--track-width: 4px;"
+                    class="vertical-slider"
                   />
                 </div>
                 <div class="eq-band-label-container">
