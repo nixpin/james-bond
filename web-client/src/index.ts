@@ -48,7 +48,7 @@ export class JamesBondApp extends LitElement {
               <span class="inline-flex h-3 w-3 rounded-full bg-green-500"></span>
               <span class="text-sm font-semibold text-zinc-400">Connected</span>
             </div>
-            <jb-button variant="secondary" @click=${this._logout} class="px-3 py-1.5 text-xs">
+            <jb-button variant="secondary" @click=${this._logout} class="text-xs">
               Logout
             </jb-button>
           </div>

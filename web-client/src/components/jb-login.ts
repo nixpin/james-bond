@@ -68,6 +68,9 @@ export class JBLogin extends LitElement {
               </div>
             ` : ''}
 
+            <!-- Hidden submit button for Enter key support -->
+            <button type="submit" class="hidden" aria-hidden="true"></button>
+
             <jb-button 
               type="submit"
               variant="primary" 

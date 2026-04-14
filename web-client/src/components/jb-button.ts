@@ -1,27 +1,43 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, css, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import styles from './jb-button.css?inline';
 
 @customElement('jb-button')
 export class JBButton extends LitElement {
+  static styles = css`${unsafeCSS(styles)}`;
+
   @property({ type: String }) variant: 'primary' | 'secondary' | 'danger' = 'primary';
   @property({ type: Boolean }) disabled = false;
+  @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
 
-  protected createRenderRoot() {
-    return this;
+  _handleClick(e: Event) {
+    if (this.disabled) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      return;
+    }
+    
+    if (this.type === 'submit') {
+      const form = (this.getRootNode() as ShadowRoot | Document).querySelector('form') || this.closest('form');
+      if (form) {
+        // Create a temporary submit button and click it to trigger validation and submit events
+        const tmpSubmit = document.createElement('button');
+        tmpSubmit.type = 'submit';
+        tmpSubmit.style.display = 'none';
+        form.appendChild(tmpSubmit);
+        tmpSubmit.click();
+        form.removeChild(tmpSubmit);
+      }
+    }
   }
 
   render() {
-    const baseClasses = "px-4 py-2 rounded-md font-medium text-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2";
-    const variantClasses = {
-      primary: "bg-blue-600 hover:bg-blue-700 text-white focus:ring-blue-500",
-      secondary: "bg-zinc-800 hover:bg-zinc-700 text-zinc-100 focus:ring-zinc-600",
-      danger: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500"
-    };
-
     return html`
       <button 
-        .disabled=${this.disabled}
-        class="${baseClasses} ${variantClasses[this.variant]} ${this.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}"
+        type=${this.type}
+        ?disabled=${this.disabled}
+        class="${this.variant}"
+        @click=${this._handleClick}
       >
         <slot></slot>
       </button>
