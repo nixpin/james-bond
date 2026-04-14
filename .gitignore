@@ -3,6 +3,10 @@ bin/
 server/server
 server/main
 
+# Runtime data (keep structure, ignore content)
+server/data/**
+!server/data/**/.gitkeep
+
 # Node.js
 node_modules/
 dist/

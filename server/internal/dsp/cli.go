@@ -1,0 +1,109 @@
+package dsp
+
+import (
+	"bytes"
+	"fmt"
+	"os/exec"
+	"strings"
+)
+
+// CLIClient implements IDSPClient by executing the jamesdsp binary.
+type CLIClient struct {
+	bin string // path to jamesdsp binary
+}
+
+// NewCLIClient creates a CLIClient using the given binary path.
+func NewCLIClient(bin string) *CLIClient {
+	return &CLIClient{bin: bin}
+}
+
+// IsConnected runs jamesdsp --is-connected (exit code 1 = not connected).
+func (c *CLIClient) IsConnected() error {
+	return c.run("--is-connected")
+}
+
+// Status runs jamesdsp --status and returns the output.
+func (c *CLIClient) Status() (string, error) {
+	return c.output("--status")
+}
+
+// GetAll runs jamesdsp --get-all and parses key=value lines.
+func (c *CLIClient) GetAll() (map[string]string, error) {
+	out, err := c.output("--get-all")
+	if err != nil {
+		return nil, err
+	}
+	return parseKeyValues(out), nil
+}
+
+// Get runs jamesdsp --get <key>.
+func (c *CLIClient) Get(key string) (string, error) {
+	return c.output("--get", key)
+}
+
+// Set runs jamesdsp --set key=value.
+func (c *CLIClient) Set(key, value string) error {
+	return c.run("--set", fmt.Sprintf("%s=%s", key, value))
+}
+
+// ListDevices runs jamesdsp --list-devices.
+func (c *CLIClient) ListDevices() ([]string, error) {
+	out, err := c.output("--list-devices")
+	if err != nil {
+		return nil, err
+	}
+	return parseLines(out), nil
+}
+
+// ListKeys runs jamesdsp --list-keys.
+func (c *CLIClient) ListKeys() ([]string, error) {
+	out, err := c.output("--list-keys")
+	if err != nil {
+		return nil, err
+	}
+	return parseLines(out), nil
+}
+
+// run executes the command and returns only the error.
+func (c *CLIClient) run(args ...string) error {
+	cmd := exec.Command(c.bin, args...)
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("jamesdsp %s: %w — %s", strings.Join(args, " "), err, stderr.String())
+	}
+	return nil
+}
+
+// output executes the command and returns stdout as a string.
+func (c *CLIClient) output(args ...string) (string, error) {
+	cmd := exec.Command(c.bin, args...)
+	var stdout, stderr bytes.Buffer
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	if err := cmd.Run(); err != nil {
+		return "", fmt.Errorf("jamesdsp %s: %w — %s", strings.Join(args, " "), err, stderr.String())
+	}
+	return strings.TrimSpace(stdout.String()), nil
+}
+
+func parseKeyValues(s string) map[string]string {
+	result := make(map[string]string)
+	for _, line := range strings.Split(s, "\n") {
+		parts := strings.SplitN(line, "=", 2)
+		if len(parts) == 2 {
+			result[strings.TrimSpace(parts[0])] = strings.TrimSpace(parts[1])
+		}
+	}
+	return result
+}
+
+func parseLines(s string) []string {
+	var lines []string
+	for _, l := range strings.Split(s, "\n") {
+		if t := strings.TrimSpace(l); t != "" {
+			lines = append(lines, t)
+		}
+	}
+	return lines
+}
