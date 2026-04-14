@@ -8,6 +8,7 @@ import (
 	"github.com/james-bond/dsp-control-server/config"
 	"github.com/james-bond/dsp-control-server/internal/auth"
 	"github.com/james-bond/dsp-control-server/internal/dsp"
+	"github.com/james-bond/dsp-control-server/internal/web"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -23,7 +24,7 @@ func main() {
 
 	// --- Services ---
 	authSvc := auth.NewService(cfg)
-	dspSvc  := dsp.NewService(dspCLI)
+	dspSvc := dsp.NewService(dspCLI)
 
 	// --- Middleware ---
 	authMW := auth.Middleware(authSvc)
@@ -57,6 +58,9 @@ func main() {
 	api := e.Group("/api")
 	auth.Register(api, authSvc)
 	dsp.Register(api, authMW, dspSvc)
+
+	// Web client assets — handles all remaining routes
+	web.Register(e)
 
 	logger.Info("starting server", slog.String("port", cfg.Port))
 	if err := e.Start(cfg.Port); err != nil {
