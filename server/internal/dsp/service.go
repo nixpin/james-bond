@@ -181,7 +181,10 @@ func (s *Service) SetConvolver(c *Convolver) error {
 
 // --- Helpers ---
 
-func parseBool(s string) bool { return s == "true" }
+func parseBool(s string) bool {
+	s = strings.ToLower(s)
+	return s == "true" || s == "1" || s == "on" || s == "yes"
+}
 
 func parseInt(s string) int {
 	v, _ := strconv.Atoi(s)

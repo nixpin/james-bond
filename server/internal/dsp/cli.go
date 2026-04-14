@@ -70,7 +70,12 @@ func (c *CLIClient) run(args ...string) error {
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("jamesdsp %s: %w — %s", strings.Join(args, " "), err, stderr.String())
+		// Some versions of JamesDSP return exit status 1 on success for state-modifying commands.
+		// If stderr is empty, we treat it as success.
+		if stderr.Len() == 0 && isStateModifying(args) {
+			return nil
+		}
+		return fmt.Errorf("%s %s: %w — %s", c.bin, strings.Join(args, " "), err, stderr.String())
 	}
 	return nil
 }
@@ -82,9 +87,26 @@ func (c *CLIClient) output(args ...string) (string, error) {
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
-		return "", fmt.Errorf("jamesdsp %s: %w — %s", strings.Join(args, " "), err, stderr.String())
+		// Same logic for output-returning state-modifying commands (if any)
+		if stderr.Len() == 0 && isStateModifying(args) {
+			return strings.TrimSpace(stdout.String()), nil
+		}
+		return "", fmt.Errorf("%s %s: %w — %s", c.bin, strings.Join(args, " "), err, stderr.String())
 	}
 	return strings.TrimSpace(stdout.String()), nil
+}
+
+func isStateModifying(args []string) bool {
+	if len(args) == 0 {
+		return false
+	}
+	cmd := args[0]
+	return cmd == "--set" ||
+		cmd == "--save-preset" ||
+		cmd == "--load-preset" ||
+		cmd == "--delete-preset" ||
+		cmd == "--set-preset-rule" ||
+		cmd == "--delete-preset-rule"
 }
 
 func parseKeyValues(s string) map[string]string {
