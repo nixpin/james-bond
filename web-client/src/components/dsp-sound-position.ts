@@ -46,17 +46,17 @@ export class DSPSoundPosition extends LitElement {
     ];
 
     return html`
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-sm flex flex-col gap-6">
-        <header class="flex items-center gap-2 border-b border-zinc-800 pb-3 -mb-2">
-          <div class="w-2 h-6 bg-blue-500 rounded-full"></div>
-          <h3 class="font-bold text-zinc-100 tracking-tight">Sound Positioning</h3>
+      <div class="jb-card">
+        <header class="card-header">
+          <div class="card-indicator"></div>
+          <h3 class="card-title">Sound Positioning</h3>
         </header>
 
-        <div class="space-y-6">
+        <div class="sound-pos-container">
           <!-- Crossfeed Section -->
-          <div class="space-y-4">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Crossfeed</span>
+          <div class="sound-pos-group">
+            <div class="sound-pos-header">
+              <span class="sound-pos-label">Crossfeed</span>
             </div>
             
             <jb-toggle 
@@ -68,6 +68,7 @@ export class DSPSoundPosition extends LitElement {
             <jb-select 
               label="Mode" 
               .value=${this.config.crossfeed_mode.toString()} 
+              .disabled=${!this.config.crossfeed_enabled}
               .options=${crossfeedOptions}
               @change=${(e: CustomEvent<string>) => this._onChange({ crossfeed_mode: parseInt(e.detail) })}
             ></jb-select>
@@ -76,6 +77,7 @@ export class DSPSoundPosition extends LitElement {
               <jb-slider 
                 label="Feed Amount" 
                 .value=${this.config.crossfeed_feed} 
+                .disabled=${!this.config.crossfeed_enabled}
                 min="10" 
                 max="150" 
                 step="1" 
@@ -87,6 +89,7 @@ export class DSPSoundPosition extends LitElement {
               <jb-slider 
                 label="Cutoff Frequency" 
                 .value=${this.config.crossfeed_fcut} 
+                .disabled=${!this.config.crossfeed_enabled}
                 min="300" 
                 max="2000" 
                 step="10" 
@@ -97,12 +100,12 @@ export class DSPSoundPosition extends LitElement {
             ` : ''}
           </div>
 
-          <div class="border-t border-zinc-800/50 pt-4"></div>
+          <div class="sound-pos-divider"></div>
 
           <!-- Stereowide Section -->
-          <div class="space-y-4">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Stereo Wideness</span>
+          <div class="sound-pos-group">
+            <div class="sound-pos-header">
+              <span class="sound-pos-label">Stereo Wideness</span>
             </div>
 
             <jb-toggle 
@@ -114,6 +117,7 @@ export class DSPSoundPosition extends LitElement {
             <jb-slider 
               label="Wideness Level" 
               .value=${this.config.stereowide_level} 
+              .disabled=${!this.config.stereowide_enabled}
               min="30" 
               max="75" 
               step="1" 

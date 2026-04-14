@@ -45,38 +45,40 @@ export class DSPMaster extends LitElement {
           @change=${this._onToggle}
         ></jb-toggle>
 
-        <jb-slider 
-          label="Limiter Threshold" 
-          .value=${this.config.limiter_threshold} 
-          min="-60" 
-          max="0" 
-          step="0.5" 
-          unit=" dB"
-          @input=${(e: CustomEvent<number>) => this._onInput({ limiter_threshold: e.detail })}
-          @change=${(e: CustomEvent<number>) => this._onChange({ limiter_threshold: e.detail })}
-        ></jb-slider>
+        <div class="space-y-6" ?inert=${!this.config.enabled}>
+          <jb-slider 
+            label="Limiter Threshold" 
+            .value=${this.config.limiter_threshold} 
+            min="-60" 
+            max="0" 
+            step="0.5" 
+            unit=" dB"
+            @input=${(e: CustomEvent<number>) => this._onInput({ limiter_threshold: e.detail })}
+            @change=${(e: CustomEvent<number>) => this._onChange({ limiter_threshold: e.detail })}
+          ></jb-slider>
 
-        <jb-slider 
-          label="Limiter Release" 
-          .value=${this.config.limiter_release} 
-          min="2" 
-          max="500" 
-          step="1" 
-          unit=" ms"
-          @input=${(e: CustomEvent<number>) => this._onInput({ limiter_release: Math.round(e.detail) })}
-          @change=${(e: CustomEvent<number>) => this._onChange({ limiter_release: Math.round(e.detail) })}
-        ></jb-slider>
+          <jb-slider 
+            label="Limiter Release" 
+            .value=${this.config.limiter_release} 
+            min="2" 
+            max="500" 
+            step="1" 
+            unit=" ms"
+            @input=${(e: CustomEvent<number>) => this._onInput({ limiter_release: Math.round(e.detail) })}
+            @change=${(e: CustomEvent<number>) => this._onChange({ limiter_release: Math.round(e.detail) })}
+          ></jb-slider>
 
-        <jb-slider 
-          label="Post Gain" 
-          .value=${this.config.post_gain} 
-          min="-15" 
-          max="15" 
-          step="0.5" 
-          unit=" dB"
-          @input=${(e: CustomEvent<number>) => this._onInput({ post_gain: e.detail })}
-          @change=${(e: CustomEvent<number>) => this._onChange({ post_gain: e.detail })}
-        ></jb-slider>
+          <jb-slider 
+            label="Post Gain" 
+            .value=${this.config.post_gain} 
+            min="-15" 
+            max="15" 
+            step="0.5" 
+            unit=" dB"
+            @input=${(e: CustomEvent<number>) => this._onInput({ post_gain: e.detail })}
+            @change=${(e: CustomEvent<number>) => this._onChange({ post_gain: e.detail })}
+          ></jb-slider>
+        </div>
       </div>
     `;
   }

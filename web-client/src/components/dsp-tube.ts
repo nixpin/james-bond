@@ -45,16 +45,18 @@ export class DSPTube extends LitElement {
           @change=${this._onToggle}
         ></jb-toggle>
 
-        <jb-slider 
-          label="Pregain" 
-          .value=${this.config.pre_gain} 
-          min="-300" 
-          max="1200" 
-          step="1" 
-          unit=""
-          @input=${this._onInput}
-          @change=${this._onChange}
-        ></jb-slider>
+        <div ?inert=${!this.config.enabled}>
+          <jb-slider 
+            label="Pregain" 
+            .value=${this.config.pre_gain} 
+            min="-300" 
+            max="1200" 
+            step="1" 
+            unit=""
+            @input=${this._onInput}
+            @change=${this._onChange}
+          ></jb-slider>
+        </div>
       </div>
     `;
   }

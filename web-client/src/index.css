@@ -25,6 +25,14 @@ jb-button.w-full {
   @apply block w-full;
 }
 
+/* Universal Disabled State using [inert] 
+   Modern browsers handle interaction automatically, 
+   we just add visual feedback. */
+[inert] {
+  @apply opacity-50 grayscale pointer-events-none;
+  cursor: not-allowed;
+}
+
 /* Layout Classes */
 .app-container {
   @apply p-4 md:p-6 max-w-5xl mx-auto;
@@ -188,7 +196,7 @@ jb-button.w-full {
 
 /* Convolver Specific */
 .convolver-file-info {
-  @apply bg-zinc-800/50 rounded-lg p-3 border border-zinc-800;
+  @apply bg-zinc-800/50 rounded-lg p-3 border border-zinc-800 transition-all;
 }
 
 .convolver-file-label {
@@ -221,41 +229,28 @@ jb-button.w-full {
 }
 
 /* Custom Scrollbar Styles */
-.eq-settings-panel::-webkit-scrollbar,
-.eq-visualizer-content::-webkit-scrollbar,
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-}
-
-.eq-settings-panel::-webkit-scrollbar-track,
-.eq-visualizer-content::-webkit-scrollbar-track {
-  background: #18181b;
-  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-track {
   background: #09090b;
 }
 
-.eq-settings-panel::-webkit-scrollbar-thumb,
-.eq-visualizer-content::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb {
   background: #27272a;
   border-radius: 9999px;
 }
 
-.eq-settings-panel::-webkit-scrollbar-thumb:hover,
-.eq-visualizer-content::-webkit-scrollbar-thumb:hover,
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
 
-/* Vertical slider */
+/* Vertical slider fix (Standard-compliant way) */
 .vertical-slider {
-  -webkit-appearance: slider-vertical;
-  appearance: slider-vertical;
-  writing-mode: bt-lr;
+  writing-mode: vertical-lr;
+  direction: rtl;
   touch-action: pan-x;
   width: 1.5rem;
   height: 100%;
@@ -263,7 +258,31 @@ jb-button.w-full {
   cursor: pointer;
   outline: none;
   border: none;
-  @apply accent-blue-500;
+  @apply accent-blue-500 appearance-none;
 }
-/* No pseudo-element styles for vertical-slider to avoid layout conflicts in vertical mode */
 
+/* Custom track/thumb styling for vertical inputs 
+   Note: we avoid setting height/width on pseudo-elements 
+   that might conflict with writing-mode layout. */
+.vertical-slider::-webkit-slider-runnable-track {
+  @apply bg-zinc-800 rounded-full;
+  width: 4px;
+}
+
+.vertical-slider::-webkit-slider-thumb {
+  @apply appearance-none bg-blue-500 rounded-full border-2 border-zinc-950 shadow-md;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: -8px; /* Alignment adjustment for vertical-lr */
+}
+
+.vertical-slider::-moz-range-track {
+  @apply bg-zinc-800 rounded-full;
+  width: 4px;
+}
+
+.vertical-slider::-moz-range-thumb {
+  @apply bg-blue-500 rounded-full border-2 border-zinc-950 shadow-md;
+  width: 1.25rem;
+  height: 1.25rem;
+}

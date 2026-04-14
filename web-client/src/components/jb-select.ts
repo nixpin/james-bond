@@ -1,15 +1,15 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, css, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import styles from './jb-select.css?inline';
 
 @customElement('jb-select')
 export class JBSelect extends LitElement {
+  static styles = css`${unsafeCSS(styles)}`;
+
   @property({ type: String }) label = '';
   @property({ type: String }) value = '';
   @property({ type: Array }) options: { label: string; value: string | number }[] = [];
-
-  protected createRenderRoot() {
-    return this;
-  }
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   _onChange(e: Event) {
     const select = e.target as HTMLSelectElement;
@@ -18,12 +18,12 @@ export class JBSelect extends LitElement {
 
   render() {
     return html`
-      <div>
-        <label class="block text-sm font-medium text-zinc-300 mb-1">${this.label}</label>
+      <div class="select-container">
+        <label>${this.label}</label>
         <select 
+          ?disabled=${this.disabled}
           .value=${this.value}
           @change=${this._onChange}
-          class="block w-full rounded-md border-0 bg-zinc-800 py-1.5 px-3 text-zinc-100 ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
         >
           ${this.options.map(opt => html`
             <option value=${opt.value} ?selected=${this.value === opt.value.toString()}>

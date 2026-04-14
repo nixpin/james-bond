@@ -57,60 +57,61 @@ export class DSPEqualizer extends LitElement {
           <h3 class="card-title text-lg">Parametric Equalizer</h3>
         </header>
         
-        <div class="eq-settings-panel">
-          <div class="eq-setting-item">
-            <jb-toggle 
-              label="Enable" 
-              .enabled=${this.config.enabled} 
-              @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
-            ></jb-toggle>
+        <jb-toggle 
+          label="Enable" 
+          .enabled=${this.config.enabled} 
+          @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
+        ></jb-toggle>
+
+        <div class="space-y-8" ?inert=${!this.config.enabled}>
+          <div class="eq-settings-panel">
+            <div class="eq-setting-item-large">
+              <jb-select 
+                label="Filter Type" 
+                .value=${this.config.filter_type.toString()} 
+                .options=${filterOptions}
+                @change=${(e: CustomEvent<string>) => this._update({ filter_type: parseInt(e.detail) })}
+              ></jb-select>
+            </div>
+
+            <div class="eq-setting-item-large">
+              <jb-select 
+                label="Interpolation" 
+                .value=${this.config.interpolation.toString()} 
+                .options=${interpOptions}
+                @change=${(e: CustomEvent<string>) => this._update({ interpolation: parseInt(e.detail) })}
+              ></jb-select>
+            </div>
           </div>
 
-          <div class="eq-setting-item-large">
-            <jb-select 
-              label="Filter Type" 
-              .value=${this.config.filter_type.toString()} 
-              .options=${filterOptions}
-              @change=${(e: CustomEvent<string>) => this._update({ filter_type: parseInt(e.detail) })}
-            ></jb-select>
-          </div>
+          <div class="eq-visualizer-container">
+            <div class="eq-visualizer-content">
+              ${this.config.bands.map((band, i) => html`
+                <div class="eq-band">
+                  <div class="eq-band-slider-container">
+                    <input 
+                      type="range" 
+                      min="-12" 
+                      max="12" 
+                      step="0.5" 
+                      .value=${this.config.gains[i].toString()}
+                      @input=${(e: Event) => this._onInputGain(i, parseFloat((e.target as HTMLInputElement).value))}
+                      @change=${(e: Event) => this._onChangeGain(i, parseFloat((e.target as HTMLInputElement).value))}
+                      class="vertical-slider"
+                    />
+                  </div>
 
-          <div class="eq-setting-item-large">
-            <jb-select 
-              label="Interpolation" 
-              .value=${this.config.interpolation.toString()} 
-              .options=${interpOptions}
-              @change=${(e: CustomEvent<string>) => this._update({ interpolation: parseInt(e.detail) })}
-            ></jb-select>
-          </div>
-        </div>
-
-        <div class="eq-visualizer-container">
-          <div class="eq-visualizer-content">
-            ${this.config.bands.map((band, i) => html`
-              <div class="eq-band">
-                <div class="eq-band-slider-container">
-                  <input 
-                    type="range" 
-                    min="-12" 
-                    max="12" 
-                    step="0.5" 
-                    .value=${this.config.gains[i].toString()}
-                    @input=${(e: Event) => this._onInputGain(i, parseFloat((e.target as HTMLInputElement).value))}
-                    @change=${(e: Event) => this._onChangeGain(i, parseFloat((e.target as HTMLInputElement).value))}
-                    class="vertical-slider"
-                  />
+                  <div class="eq-band-label-container">
+                    <span class="eq-band-freq">
+                      ${band < 1000 ? band : (band / 1000) + 'k'}
+                    </span>
+                    <span class="eq-band-value">
+                      ${this.config.gains[i] > 0 ? '+' : ''}${this.config.gains[i]}
+                    </span>
+                  </div>
                 </div>
-                <div class="eq-band-label-container">
-                  <span class="eq-band-freq">
-                    ${band < 1000 ? band : (band / 1000) + 'k'}
-                  </span>
-                  <span class="eq-band-value">
-                    ${this.config.gains[i] > 0 ? '+' : ''}${this.config.gains[i]}
-                  </span>
-                </div>
-              </div>
-            `)}
+              `)}
+            </div>
           </div>
         </div>
       </div>

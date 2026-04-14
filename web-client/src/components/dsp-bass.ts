@@ -45,16 +45,18 @@ export class DSPBass extends LitElement {
           @change=${this._toggle}
         ></jb-toggle>
 
-        <jb-slider 
-          label="Maximum Gain" 
-          .value=${this.config.max_gain} 
-          min="3" 
-          max="15" 
-          step="0.5" 
-          unit=" dB"
-          @input=${this._onInput}
-          @change=${this._onChange}
-        ></jb-slider>
+        <div ?inert=${!this.config.enabled}>
+          <jb-slider 
+            label="Maximum Gain" 
+            .value=${this.config.max_gain} 
+            min="3" 
+            max="15" 
+            step="0.5" 
+            unit=" dB"
+            @input=${this._onInput}
+            @change=${this._onChange}
+          ></jb-slider>
+        </div>
       </div>
     `;
   }

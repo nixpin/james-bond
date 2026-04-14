@@ -12,9 +12,9 @@ export class JBSlider extends LitElement {
   @property({ type: Number }) max = 100;
   @property({ type: Number }) step = 1;
   @property({ type: String }) unit = '';
+  @property({ type: Boolean, reflect: true }) disabled = false;
 
   _onInput(e: Event) {
-    e.stopPropagation(); // Prevent native input event from leaking
     const input = e.target as HTMLInputElement;
     const val = parseFloat(input.value);
     this.value = val; // Update internal value for display
@@ -26,7 +26,6 @@ export class JBSlider extends LitElement {
   }
 
   _onChange(e: Event) {
-    e.stopPropagation(); // Prevent native change event from leaking
     const input = e.target as HTMLInputElement;
     const val = parseFloat(input.value);
     this.dispatchEvent(new CustomEvent('change', { 
@@ -45,6 +44,7 @@ export class JBSlider extends LitElement {
         </div>
         <input 
           type="range" 
+          ?disabled=${this.disabled}
           .min=${this.min.toString()} 
           .max=${this.max.toString()} 
           .step=${this.step.toString()} 

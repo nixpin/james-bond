@@ -38,38 +38,44 @@ button:focus-visible {
   box-shadow: 0 0 0 2px #09090b, 0 0 0 4px currentColor;
 }
 
-button:disabled {
-  opacity: 0.5 !important;
-  cursor: not-allowed;
-  filter: grayscale(1);
-}
-
-.primary {
+/* Variant Styles using host attributes */
+:host([variant="primary"]) button {
   background-color: #2563eb;
   color: #ffffff;
   box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
 }
 
-.primary:hover {
+:host([variant="primary"]) button:hover {
   background-color: #3b82f6;
 }
 
-.secondary {
+:host([variant="secondary"]) button {
   background-color: #27272a;
   color: #f4f4f5;
   border: 1px solid #3f3f46;
 }
 
-.secondary:hover {
+:host([variant="secondary"]) button:hover {
   background-color: #3f3f46;
 }
 
-.danger {
+:host([variant="danger"]) button {
   background-color: #dc2626;
   color: #ffffff;
   box-shadow: 0 4px 6px -1px rgba(127, 29, 29, 0.2);
 }
 
-.danger:hover {
+:host([variant="danger"]) button:hover {
   background-color: #ef4444;
+}
+
+/* Disabled state */
+:host([disabled]) {
+  opacity: 0.5;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }

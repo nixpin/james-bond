@@ -36,23 +36,25 @@ export class DSPConvolver extends LitElement {
           @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
         ></jb-toggle>
 
-        <div class="convolver-file-info">
-          <label class="convolver-file-label">Impulse Response File</label>
-          <div class="convolver-file-name">
-            ${this.config.file || 'No file selected'}
+        <div class="space-y-6" ?inert=${!this.config.enabled}>
+          <div class="convolver-file-info">
+            <label class="convolver-file-label">Impulse Response File</label>
+            <div class="convolver-file-name">
+              ${this.config.file || 'No file selected'}
+            </div>
           </div>
-        </div>
 
-        <jb-select 
-          label="Optimization Mode" 
-          .value=${this.config.optimization_mode.toString()} 
-          .options=${[
-            { label: 'Original', value: 0 },
-            { label: 'Shrink', value: 1 },
-            { label: 'Min-phase Transformed', value: 2 }
-          ]}
-          @change=${(e: CustomEvent<string>) => this._update({ optimization_mode: parseInt(e.detail) })}
-        ></jb-select>
+          <jb-select 
+            label="Optimization Mode" 
+            .value=${this.config.optimization_mode.toString()} 
+            .options=${[
+              { label: 'Original', value: 0 },
+              { label: 'Shrink', value: 1 },
+              { label: 'Min-phase Transformed', value: 2 }
+            ]}
+            @change=${(e: CustomEvent<string>) => this._update({ optimization_mode: parseInt(e.detail) })}
+          ></jb-select>
+        </div>
       </div>
     `;
   }

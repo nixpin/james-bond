@@ -1,24 +1,27 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, css, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import styles from './jb-toggle.css?inline';
 
 @customElement('jb-toggle')
 export class JBToggle extends LitElement {
-  @property({ type: Boolean }) enabled = false;
-  @property({ type: String }) label = '';
+  static styles = css`${unsafeCSS(styles)}`;
 
-  protected createRenderRoot() {
-    return this;
-  }
+  @property({ type: Boolean, reflect: true }) enabled = false;
+  @property({ type: Boolean, reflect: true }) disabled = false;
+  @property({ type: String }) label = '';
 
   render() {
     return html`
-      <div class="flex items-center justify-between">
-        <label class="text-sm font-medium text-zinc-300">${this.label}</label>
+      <div class="toggle-container">
+        <label class="label">${this.label}</label>
         <button 
+          class="switch"
+          role="switch"
+          aria-checked=${this.enabled}
+          ?disabled=${this.disabled}
           @click=${() => this.dispatchEvent(new CustomEvent('change', { detail: !this.enabled }))}
-          class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 ${this.enabled ? 'bg-blue-600' : 'bg-zinc-700'}"
         >
-          <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${this.enabled ? 'translate-x-5' : 'translate-x-0'}"></span>
+          <span class="thumb"></span>
         </button>
       </div>
     `;

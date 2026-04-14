@@ -6,8 +6,8 @@ import styles from './jb-button.css?inline';
 export class JBButton extends LitElement {
   static styles = css`${unsafeCSS(styles)}`;
 
-  @property({ type: String }) variant: 'primary' | 'secondary' | 'danger' = 'primary';
-  @property({ type: Boolean }) disabled = false;
+  @property({ type: String, reflect: true }) variant: 'primary' | 'secondary' | 'danger' = 'primary';
+  @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
 
   _handleClick(e: Event) {
@@ -36,7 +36,6 @@ export class JBButton extends LitElement {
       <button 
         type=${this.type}
         ?disabled=${this.disabled}
-        class="${this.variant}"
         @click=${this._handleClick}
       >
         <slot></slot>
