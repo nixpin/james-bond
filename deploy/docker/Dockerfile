@@ -77,7 +77,7 @@ USER ${UID}
 
 ENV XDG_RUNTIME_DIR=/tmp/runtime
 ENV PIPEWIRE_RUNTIME_DIR=/run/user/${UID}
-ENV DATA_DIR=/app/data
+ENV JB_DATA_DIR=/app/data
 
 EXPOSE 8080
 

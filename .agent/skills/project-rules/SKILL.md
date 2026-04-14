@@ -45,20 +45,20 @@ description: Follow the project rules for all tasks.
 
 ## Configuration
 - all config loaded from environment variables via `config/config.go`
-- required env vars: JWT_SECRET, ADMIN_USER, ADMIN_PASS
-- optional env vars: SERVER_PORT (default :8080), DATA_DIR (default ./data), JAMESDSP_BIN (default jamesdsp), CLIENT_TOKENS (comma-separated)
+- required env vars: JB_JWT_SECRET, JB_ADMIN_USER, JB_ADMIN_PASS
+- optional env vars: JB_SERVER_PORT (default :8080), JB_DATA_DIR (default ./data), JB_JAMESDSP_BIN (default jamesdsp), JB_CLIENT_TOKENS (comma-separated)
 
 ## Authentication
 - full JWT authentication
 - users (admin + clients) are defined via environment variables
-- admin: ADMIN_USER + ADMIN_PASS env vars
-- clients: CLIENT_TOKENS env var (comma-separated pre-issued tokens)
-- JWT tokens signed with JWT_SECRET
+- admin: JB_ADMIN_USER + JB_ADMIN_PASS env vars
+- clients: JB_CLIENT_TOKENS env var (comma-separated pre-issued tokens)
+- JWT tokens signed with JB_JWT_SECRET
 - auth.Middleware() is created once in main.go and passed as argument to each module's Register() function
 - protected routes use Authorization: Bearer <jwt> header
 
 ## Storage
-- all runtime data stored in `./data/` directory (configured via DATA_DIR env)
+- all runtime data stored in `./data/` directory (configured via JB_DATA_DIR env)
 - data/clients.json  — client token records
 - data/presets/      — preset JSON files
 - data/impulses/     — uploaded IR (.wav) files

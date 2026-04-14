@@ -1,0 +1,68 @@
+import { LitElement, html } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
+import { dspApi, Master } from '../dsp-api';
+import './jb-toggle';
+import './jb-slider';
+
+@customElement('dsp-master')
+export class DSPMaster extends LitElement {
+  @state() private config: Master = { enabled: false, limiter_release: 60, limiter_threshold: 0, post_gain: 0 };
+
+  protected createRenderRoot() {
+    return this;
+  }
+
+  async connectedCallback() {
+    super.connectedCallback();
+    this.config = await dspApi.getMaster();
+  }
+
+  async _update(config: Partial<Master>) {
+    this.config = { ...this.config, ...config };
+    await dspApi.setMaster(this.config);
+  }
+
+  render() {
+    return html`
+      <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-4">
+        <h3 class="font-medium mb-4 text-zinc-100">Master & Limiter</h3>
+        
+        <jb-toggle 
+          label="Enable" 
+          .enabled=${this.config.enabled} 
+          @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
+        ></jb-toggle>
+
+        <jb-slider 
+          label="Limiter Threshold" 
+          .value=${this.config.limiter_threshold} 
+          min="-60" 
+          max="0" 
+          step="0.5" 
+          unit=" dB"
+          @change=${(e: CustomEvent<number>) => this._update({ limiter_threshold: e.detail })}
+        ></jb-slider>
+
+        <jb-slider 
+          label="Limiter Release" 
+          .value=${this.config.limiter_release} 
+          min="2" 
+          max="500" 
+          step="1" 
+          unit=" ms"
+          @change=${(e: CustomEvent<number>) => this._update({ limiter_release: Math.round(e.detail) })}
+        ></jb-slider>
+
+        <jb-slider 
+          label="Post Gain" 
+          .value=${this.config.post_gain} 
+          min="-15" 
+          max="15" 
+          step="0.5" 
+          unit=" dB"
+          @change=${(e: CustomEvent<number>) => this._update({ post_gain: e.detail })}
+        ></jb-slider>
+      </div>
+    `;
+  }
+}

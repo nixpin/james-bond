@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ],
   root: 'src',
   publicDir: '../public',
   build: {
@@ -10,7 +14,7 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '/api': 'http://localhost:8080'
+      '/api/': 'http://localhost:8080'
     }
   }
 })

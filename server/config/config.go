@@ -19,13 +19,13 @@ type Config struct {
 // Load reads configuration from environment variables with sensible defaults.
 func Load() *Config {
 	return &Config{
-		Port:         getEnv("SERVER_PORT", ":8080"),
-		DataDir:      getEnv("DATA_DIR", "./data"),
-		JWTSecret:    getEnv("JWT_SECRET", ""),
-		JamesDSPBin:  getEnv("JAMESDSP_BIN", "jamesdsp"),
-		AdminUser:    getEnv("ADMIN_USER", ""),
-		AdminPass:    getEnv("ADMIN_PASS", ""),
-		ClientTokens: parseList(getEnv("CLIENT_TOKENS", "")),
+		Port:         getEnv("JB_SERVER_PORT", ":8080"),
+		DataDir:      getEnv("JB_DATA_DIR", "./data"),
+		JWTSecret:    getEnv("JB_JWT_SECRET", ""),
+		JamesDSPBin:  getEnv("JB_JAMESDSP_BIN", "jamesdsp"),
+		AdminUser:    getEnv("JB_ADMIN_USER", ""),
+		AdminPass:    getEnv("JB_ADMIN_PASS", ""),
+		ClientTokens: parseList(getEnv("JB_CLIENT_TOKENS", "")),
 	}
 }
 

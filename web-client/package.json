@@ -12,9 +12,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.2",
+    "autoprefixer": "^10.5.0",
     "lit": "^3.3.2",
+    "postcss": "^8.5.9",
+    "tailwindcss": "^4.2.2",
     "vite": "^8.0.4"
   },
   "devDependencies": {
