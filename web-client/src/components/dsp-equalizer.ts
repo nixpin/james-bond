@@ -22,7 +22,13 @@ export class DSPEqualizer extends LitElement {
     await dspApi.setEqualizer(this.config);
   }
 
-  async _updateGain(index: number, val: number) {
+  _onInputGain(index: number, val: number) {
+    const newGains = [...this.config.gains];
+    newGains[index] = val;
+    this.config = { ...this.config, gains: newGains };
+  }
+
+  async _onChangeGain(index: number, val: number) {
     const newGains = [...this.config.gains];
     newGains[index] = val;
     this.config = { ...this.config, gains: newGains };
@@ -83,7 +89,8 @@ export class DSPEqualizer extends LitElement {
                   max="12" 
                   step="0.5" 
                   .value=${this.config.gains[i].toString()}
-                  @input=${(e: Event) => this._updateGain(i, parseFloat((e.target as HTMLInputElement).value))}
+                  @input=${(e: Event) => this._onInputGain(i, parseFloat((e.target as HTMLInputElement).value))}
+                  @change=${(e: Event) => this._onChangeGain(i, parseFloat((e.target as HTMLInputElement).value))}
                   class="vertical-slider w-2 h-full bg-zinc-800 rounded-full appearance-none cursor-pointer accent-blue-500 hover:bg-zinc-700 transition-colors"
                 />
               </div>

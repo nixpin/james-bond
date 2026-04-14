@@ -17,8 +17,17 @@ export class DSPMaster extends LitElement {
     this.config = await dspApi.getMaster();
   }
 
-  async _update(config: Partial<Master>) {
+  _onInput(config: Partial<Master>) {
     this.config = { ...this.config, ...config };
+  }
+
+  async _onChange(config: Partial<Master>) {
+    this.config = { ...this.config, ...config };
+    await dspApi.setMaster(this.config);
+  }
+
+  async _onToggle(e: CustomEvent<boolean>) {
+    this.config = { ...this.config, enabled: e.detail };
     await dspApi.setMaster(this.config);
   }
 
@@ -33,7 +42,7 @@ export class DSPMaster extends LitElement {
         <jb-toggle 
           label="Enable" 
           .enabled=${this.config.enabled} 
-          @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
+          @change=${this._onToggle}
         ></jb-toggle>
 
         <jb-slider 
@@ -43,7 +52,8 @@ export class DSPMaster extends LitElement {
           max="0" 
           step="0.5" 
           unit=" dB"
-          @change=${(e: CustomEvent<number>) => this._update({ limiter_threshold: e.detail })}
+          @input=${(e: CustomEvent<number>) => this._onInput({ limiter_threshold: e.detail })}
+          @change=${(e: CustomEvent<number>) => this._onChange({ limiter_threshold: e.detail })}
         ></jb-slider>
 
         <jb-slider 
@@ -53,7 +63,8 @@ export class DSPMaster extends LitElement {
           max="500" 
           step="1" 
           unit=" ms"
-          @change=${(e: CustomEvent<number>) => this._update({ limiter_release: Math.round(e.detail) })}
+          @input=${(e: CustomEvent<number>) => this._onInput({ limiter_release: Math.round(e.detail) })}
+          @change=${(e: CustomEvent<number>) => this._onChange({ limiter_release: Math.round(e.detail) })}
         ></jb-slider>
 
         <jb-slider 
@@ -63,7 +74,8 @@ export class DSPMaster extends LitElement {
           max="15" 
           step="0.5" 
           unit=" dB"
-          @change=${(e: CustomEvent<number>) => this._update({ post_gain: e.detail })}
+          @input=${(e: CustomEvent<number>) => this._onInput({ post_gain: e.detail })}
+          @change=${(e: CustomEvent<number>) => this._onChange({ post_gain: e.detail })}
         ></jb-slider>
       </div>
     `;

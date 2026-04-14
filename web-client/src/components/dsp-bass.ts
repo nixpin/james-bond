@@ -22,7 +22,11 @@ export class DSPBass extends LitElement {
     await dspApi.setBass(this.config);
   }
 
-  async _updateGain(e: CustomEvent<number>) {
+  _onInput(e: CustomEvent<number>) {
+    this.config = { ...this.config, max_gain: e.detail };
+  }
+
+  async _onChange(e: CustomEvent<number>) {
     this.config = { ...this.config, max_gain: e.detail };
     await dspApi.setBass(this.config);
   }
@@ -48,7 +52,8 @@ export class DSPBass extends LitElement {
           max="15" 
           step="0.5" 
           unit=" dB"
-          @change=${this._updateGain}
+          @input=${this._onInput}
+          @change=${this._onChange}
         ></jb-slider>
       </div>
     `;

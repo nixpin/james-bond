@@ -179,6 +179,42 @@ func (s *Service) SetConvolver(c *Convolver) error {
 	return s.client.Set(ParamConvolverEdit, c.WaveformEdit)
 }
 
+// GetSoundPosition returns the current sound positioning settings.
+func (s *Service) GetSoundPosition() (*SoundPosition, error) {
+	params, err := s.client.GetAll()
+	if err != nil {
+		return nil, err
+	}
+	return &SoundPosition{
+		CrossfeedEnabled:  parseBool(params[ParamCrossfeedEnable]),
+		CrossfeedMode:     parseInt(params[ParamCrossfeedMode]),
+		CrossfeedFeed:     parseInt(params[ParamCrossfeedFeed]),
+		CrossfeedFcut:     parseInt(params[ParamCrossfeedFcut]),
+		StereowideEnabled: parseBool(params[ParamStereowideEnable]),
+		StereowideLevel:   parseInt(params[ParamStereowideLevel]),
+	}, nil
+}
+
+// SetSoundPosition updates the sound positioning settings.
+func (s *Service) SetSoundPosition(sp *SoundPosition) error {
+	if err := s.client.Set(ParamCrossfeedEnable, fmt.Sprintf("%t", sp.CrossfeedEnabled)); err != nil {
+		return err
+	}
+	if err := s.client.Set(ParamCrossfeedMode, fmt.Sprintf("%d", sp.CrossfeedMode)); err != nil {
+		return err
+	}
+	if err := s.client.Set(ParamCrossfeedFeed, fmt.Sprintf("%d", sp.CrossfeedFeed)); err != nil {
+		return err
+	}
+	if err := s.client.Set(ParamCrossfeedFcut, fmt.Sprintf("%d", sp.CrossfeedFcut)); err != nil {
+		return err
+	}
+	if err := s.client.Set(ParamStereowideEnable, fmt.Sprintf("%t", sp.StereowideEnabled)); err != nil {
+		return err
+	}
+	return s.client.Set(ParamStereowideLevel, fmt.Sprintf("%d", sp.StereowideLevel))
+}
+
 // --- Helpers ---
 
 func parseBool(s string) bool {

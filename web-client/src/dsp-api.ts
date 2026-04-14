@@ -44,6 +44,15 @@ export interface Convolver {
   waveform_edit: string;
 }
 
+export interface SoundPosition {
+  crossfeed_enabled: boolean;
+  crossfeed_mode: number;
+  crossfeed_feed: number;
+  crossfeed_fcut: number;
+  stereowide_enabled: boolean;
+  stereowide_level: number;
+}
+
 const STORAGE_KEY = 'jb_token';
 
 function getAuthHeaders(): HeadersInit {
@@ -126,4 +135,11 @@ export const dspApi = {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
   }).then(res => handleResponse<Convolver>(res)),
+
+  getSoundPosition: () => authFetch(`${API_BASE}/sound-position`).then(res => handleResponse<SoundPosition>(res)),
+  setSoundPosition: (data: SoundPosition) => authFetch(`${API_BASE}/sound-position`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(res => handleResponse<SoundPosition>(res)),
 };

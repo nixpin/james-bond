@@ -28,4 +28,6 @@ func Register(g *echo.Group, authMW echo.MiddlewareFunc, svc *Service) {
 	d.PUT("/tube", h.SetTube)
 	d.GET("/convolver", h.GetConvolver)
 	d.PUT("/convolver", h.SetConvolver)
+	d.GET("/sound-position", h.GetSoundPosition)
+	d.PUT("/sound-position", h.SetSoundPosition)
 }

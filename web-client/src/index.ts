@@ -6,6 +6,7 @@ import './components/dsp-master';
 import './components/dsp-tube';
 import './components/dsp-convolver';
 import './components/dsp-equalizer';
+import './components/dsp-sound-position';
 import './components/jb-login';
 import './components/jb-button';
 
@@ -72,6 +73,7 @@ export class JamesBondApp extends LitElement {
                <dsp-bass></dsp-bass>
                <dsp-tube></dsp-tube>
                <dsp-master></dsp-master>
+               <dsp-sound-position></dsp-sound-position>
                <dsp-convolver></dsp-convolver>
             </div>
           </section>

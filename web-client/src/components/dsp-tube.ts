@@ -17,8 +17,17 @@ export class DSPTube extends LitElement {
     this.config = await dspApi.getTube();
   }
 
-  async _update(config: Partial<Tube>) {
-    this.config = { ...this.config, ...config };
+  _onInput(e: CustomEvent<number>) {
+    this.config = { ...this.config, pre_gain: e.detail };
+  }
+
+  async _onChange(e: CustomEvent<number>) {
+    this.config = { ...this.config, pre_gain: e.detail };
+    await dspApi.setTube(this.config);
+  }
+
+  async _onToggle(e: CustomEvent<boolean>) {
+    this.config = { ...this.config, enabled: e.detail };
     await dspApi.setTube(this.config);
   }
 
@@ -33,7 +42,7 @@ export class DSPTube extends LitElement {
         <jb-toggle 
           label="Enable" 
           .enabled=${this.config.enabled} 
-          @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
+          @change=${this._onToggle}
         ></jb-toggle>
 
         <jb-slider 
@@ -43,7 +52,8 @@ export class DSPTube extends LitElement {
           max="1200" 
           step="1" 
           unit=""
-          @change=${(e: CustomEvent<number>) => this._update({ pre_gain: e.detail })}
+          @input=${this._onInput}
+          @change=${this._onChange}
         ></jb-slider>
       </div>
     `;

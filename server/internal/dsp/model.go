@@ -2,22 +2,28 @@ package dsp
 
 // JamesDSP Parameter Keys
 const (
-	ParamBassEnable      = "bass_enable"
-	ParamBassMaxGain     = "bass_maxgain"
-	ParamTubeEnable      = "tube_enable"
-	ParamTubePreGain     = "tube_pregain"
-	ParamMasterEnable    = "master_enable"
-	ParamMasterLimRel    = "master_limrelease"
-	ParamMasterLimThresh = "master_limthreshold"
-	ParamMasterPostGain  = "master_postgain"
-	ParamToneEnable      = "tone_enable"
-	ParamToneEQ          = "tone_eq"
-	ParamToneFilter      = "tone_filtertype"
-	ParamToneInterp      = "tone_interpolation"
-	ParamConvolverEnable = "convolver_enable"
-	ParamConvolverFile   = "convolver_file"
-	ParamConvolverOpt    = "convolver_optimization_mode"
-	ParamConvolverEdit   = "convolver_waveform_edit"
+	ParamBassEnable       = "bass_enable"
+	ParamBassMaxGain      = "bass_maxgain"
+	ParamTubeEnable       = "tube_enable"
+	ParamTubePreGain      = "tube_pregain"
+	ParamMasterEnable     = "master_enable"
+	ParamMasterLimRel     = "master_limrelease"
+	ParamMasterLimThresh  = "master_limthreshold"
+	ParamMasterPostGain   = "master_postgain"
+	ParamToneEnable       = "tone_enable"
+	ParamToneEQ           = "tone_eq"
+	ParamToneFilter       = "tone_filtertype"
+	ParamToneInterp       = "tone_interpolation"
+	ParamConvolverEnable  = "convolver_enable"
+	ParamConvolverFile    = "convolver_file"
+	ParamConvolverOpt     = "convolver_optimization_mode"
+	ParamConvolverEdit    = "convolver_waveform_edit"
+	ParamCrossfeedEnable  = "crossfeed_enable"
+	ParamCrossfeedMode    = "crossfeed_mode"
+	ParamCrossfeedFeed    = "crossfeed_bs2b_feed"
+	ParamCrossfeedFcut    = "crossfeed_bs2b_fcut"
+	ParamStereowideEnable = "stereowide_enable"
+	ParamStereowideLevel  = "stereowide_level"
 )
 
 // BassBoost represents dynamic bass boost settings.
@@ -55,6 +61,16 @@ type Convolver struct {
 	File             string `json:"file"`
 	OptimizationMode int    `json:"optimization_mode"` // [0 - 2]
 	WaveformEdit     string `json:"waveform_edit"`     // Advanced editing string
+}
+
+// SoundPosition represents crossfeed and stereowide settings.
+type SoundPosition struct {
+	CrossfeedEnabled  bool `json:"crossfeed_enabled"`
+	CrossfeedMode     int  `json:"crossfeed_mode"` // [0 - 5, 99]
+	CrossfeedFeed     int  `json:"crossfeed_feed"` // [10 - 150] (x10)
+	CrossfeedFcut     int  `json:"crossfeed_fcut"` // [300 - 2000] Hz
+	StereowideEnabled bool `json:"stereowide_enabled"`
+	StereowideLevel   int  `json:"stereowide_level"` // [30 - 75]
 }
 
 // IDSPClient is the interface for communicating with the JamesDSP CLI.

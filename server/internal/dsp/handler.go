@@ -184,3 +184,22 @@ func (h *Handler) SetConvolver(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, req)
 }
+
+func (h *Handler) GetSoundPosition(c echo.Context) error {
+	data, err := h.svc.GetSoundPosition()
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, data)
+}
+
+func (h *Handler) SetSoundPosition(c echo.Context) error {
+	var req SoundPosition
+	if err := c.Bind(&req); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "invalid request body")
+	}
+	if err := h.svc.SetSoundPosition(&req); err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, req)
+}
