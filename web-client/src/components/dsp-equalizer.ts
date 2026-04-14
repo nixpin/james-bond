@@ -51,59 +51,68 @@ export class DSPEqualizer extends LitElement {
     ];
 
     return html`
-      <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 shadow-sm col-span-1 md:col-span-2">
-        <header class="flex items-center gap-2 mb-6 border-b border-zinc-800 pb-4">
-          <div class="w-2 h-6 bg-blue-500 rounded-full"></div>
-          <h3 class="font-bold text-zinc-100 tracking-tight text-lg">Parametric Equalizer</h3>
+      <div class="jb-card col-span-1 md:col-span-2">
+        <header class="card-header">
+          <div class="card-indicator"></div>
+          <h3 class="card-title text-lg">Parametric Equalizer</h3>
         </header>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 bg-zinc-800/20 p-4 rounded-xl border border-zinc-800/50">
-          <jb-toggle 
-            label="Enable" 
-            .enabled=${this.config.enabled} 
-            @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
-          ></jb-toggle>
+        <div class="eq-settings-panel">
+          <div class="eq-setting-item">
+            <jb-toggle 
+              label="Enable" 
+              .enabled=${this.config.enabled} 
+              @change=${(e: CustomEvent<boolean>) => this._update({ enabled: e.detail })}
+            ></jb-toggle>
+          </div>
 
-          <jb-select 
-            label="Filter Type" 
-            .value=${this.config.filter_type.toString()} 
-            .options=${filterOptions}
-            @change=${(e: CustomEvent<string>) => this._update({ filter_type: parseInt(e.detail) })}
-          ></jb-select>
+          <div class="eq-setting-item-large">
+            <jb-select 
+              label="Filter Type" 
+              .value=${this.config.filter_type.toString()} 
+              .options=${filterOptions}
+              @change=${(e: CustomEvent<string>) => this._update({ filter_type: parseInt(e.detail) })}
+            ></jb-select>
+          </div>
 
-          <jb-select 
-            label="Interpolation" 
-            .value=${this.config.interpolation.toString()} 
-            .options=${interpOptions}
-            @change=${(e: CustomEvent<string>) => this._update({ interpolation: parseInt(e.detail) })}
-          ></jb-select>
+          <div class="eq-setting-item-large">
+            <jb-select 
+              label="Interpolation" 
+              .value=${this.config.interpolation.toString()} 
+              .options=${interpOptions}
+              @change=${(e: CustomEvent<string>) => this._update({ interpolation: parseInt(e.detail) })}
+            ></jb-select>
+          </div>
         </div>
 
-        <div class="flex items-end justify-between gap-2 overflow-x-auto pb-6 h-72 custom-scrollbar">
-          ${this.config.bands.map((band, i) => html`
-            <div class="flex flex-col items-center flex-1 min-w-[36px] h-full group">
-              <div class="relative flex-1 w-full flex flex-col items-center">
-                <input 
-                  type="range" 
-                  min="-12" 
-                  max="12" 
-                  step="0.5" 
-                  .value=${this.config.gains[i].toString()}
-                  @input=${(e: Event) => this._onInputGain(i, parseFloat((e.target as HTMLInputElement).value))}
-                  @change=${(e: Event) => this._onChangeGain(i, parseFloat((e.target as HTMLInputElement).value))}
-                  class="vertical-slider w-2 h-full bg-zinc-800 rounded-full appearance-none cursor-pointer accent-blue-500 hover:bg-zinc-700 transition-colors"
-                />
+        <div class="eq-visualizer-container">
+          <div class="eq-visualizer-content">
+            ${this.config.bands.map((band, i) => html`
+              <div class="eq-band">
+                <div class="eq-band-slider-container">
+                  <input 
+                    type="range" 
+                    min="-12" 
+                    max="12" 
+                    step="0.5" 
+                    .value=${this.config.gains[i].toString()}
+                    @input=${(e: Event) => this._onInputGain(i, parseFloat((e.target as HTMLInputElement).value))}
+                    @change=${(e: Event) => this._onChangeGain(i, parseFloat((e.target as HTMLInputElement).value))}
+                    class="vertical-slider w-8 h-full bg-transparent appearance-none cursor-pointer accent-blue-500 hover:accent-blue-400 transition-colors"
+                    style="--track-width: 4px;"
+                  />
+                </div>
+                <div class="eq-band-label-container">
+                  <span class="eq-band-freq">
+                    ${band < 1000 ? band : (band / 1000) + 'k'}
+                  </span>
+                  <span class="eq-band-value">
+                    ${this.config.gains[i] > 0 ? '+' : ''}${this.config.gains[i]}
+                  </span>
+                </div>
               </div>
-              <div class="mt-4 flex flex-col items-center gap-1">
-                <span class="text-[10px] font-bold text-zinc-500 uppercase">
-                  ${band < 1000 ? band : (band / 1000) + 'k'}
-                </span>
-                <span class="text-[11px] font-mono font-bold text-blue-400 bg-blue-500/10 px-1 rounded">
-                  ${this.config.gains[i] > 0 ? '+' : ''}${this.config.gains[i]}
-                </span>
-              </div>
-            </div>
-          `)}
+            `)}
+          </div>
         </div>
       </div>
     `;

@@ -12,52 +12,259 @@ body {
   @apply bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased;
 }
 
-/* Base styles for custom components to ensure they behave like block elements */
+/* Base styles for custom components */
 jb-toggle, jb-slider, jb-select {
   @apply block w-full;
 }
 
-jb-button {
-  @apply inline-block;
+/* Layout Classes */
+.app-container {
+  @apply p-4 md:p-6 max-w-5xl mx-auto;
 }
 
-/* Custom scrollbar for better look */
-.custom-scrollbar::-webkit-scrollbar {
-  @apply w-1.5 h-1.5;
+.app-header {
+  @apply mb-8 md:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-zinc-800 pb-6 gap-4;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-zinc-900 rounded-full;
+.app-logo-section {
+  @apply space-y-1;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-zinc-800 rounded-full hover:bg-zinc-700 transition-colors;
+.app-title {
+  @apply text-3xl md:text-4xl font-black text-blue-500 tracking-tighter uppercase italic;
+}
+
+.app-subtitle {
+  @apply text-zinc-500 font-medium text-sm md:text-base;
+}
+
+.app-status-bar {
+  @apply flex items-center justify-between w-full sm:w-auto gap-4;
+}
+
+.status-indicator {
+  @apply flex items-center gap-2 bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800;
+}
+
+.status-dot {
+  @apply inline-flex h-2 w-2 rounded-full bg-green-500 animate-pulse;
+}
+
+.status-text {
+  @apply text-xs font-bold text-zinc-400 uppercase tracking-wider;
+}
+
+.main-content {
+  @apply grid gap-6 md:gap-8;
+}
+
+.section-title {
+  @apply text-lg md:text-xl font-bold mb-4 md:mb-6 flex items-center gap-2;
+}
+
+.section-icon {
+  @apply w-5 h-5 text-blue-500;
+}
+
+.dsp-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6;
+}
+
+.app-footer {
+  @apply mt-20 border-t border-zinc-800 pt-6 text-center text-sm text-zinc-600 font-medium;
+}
+
+/* Login Page */
+.login-container {
+  @apply min-h-screen flex items-center justify-center bg-zinc-950 p-4;
+}
+
+.login-card {
+  @apply max-w-md w-full bg-zinc-900 border border-zinc-800 rounded-xl p-6 sm:p-8 shadow-2xl;
+}
+
+.login-header {
+  @apply mb-8 text-center;
+}
+
+.login-title {
+  @apply text-3xl font-black text-blue-500 tracking-tighter uppercase italic mb-2;
+}
+
+.login-subtitle {
+  @apply text-zinc-500 text-sm;
+}
+
+.login-form {
+  @apply space-y-6;
+}
+
+.form-group {
+  @apply space-y-2;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-zinc-400;
+}
+
+.form-input {
+  @apply block w-full rounded-lg border-0 bg-zinc-800 py-2.5 px-4 text-zinc-100 ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm;
+}
+
+.login-error {
+  @apply bg-red-900/20 border border-red-900/50 text-red-400 text-xs p-3 rounded-lg flex items-center gap-2;
+}
+
+.error-icon {
+  @apply w-4 h-4;
+}
+
+/* Base card style */
+.jb-card {
+  @apply bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm flex flex-col gap-6;
+}
+
+.card-header {
+  @apply flex items-center gap-2 border-b border-zinc-800 pb-3 -mb-2;
+}
+
+.card-indicator {
+  @apply w-2 h-6 bg-blue-500 rounded-full;
+}
+
+.card-title {
+  @apply font-bold text-zinc-100 tracking-tight;
+}
+
+/* Equalizer Specific */
+.eq-settings-panel {
+  @apply flex overflow-x-auto gap-6 mb-8 bg-zinc-800/20 p-4 rounded-xl border border-zinc-800/50 md:grid md:grid-cols-3 md:overflow-visible;
 }
 
 
-jb-button {
-  @apply inline-block;
+.eq-setting-item {
+  @apply flex-none min-w-[120px] md:min-w-0;
 }
 
-jb-button.w-full {
-  @apply block w-full;
+.eq-setting-item-large {
+  @apply flex-none min-w-[200px] md:min-w-0;
 }
 
-/* Custom scrollbar for better look */
+.eq-visualizer-container {
+  @apply relative w-full overflow-hidden bg-zinc-950/30 rounded-xl border border-zinc-800/50 p-4;
+}
+
+.eq-visualizer-content {
+  @apply flex items-end justify-start gap-3 overflow-x-auto pb-2 h-80 lg:justify-between lg:gap-2 lg:overflow-visible;
+  touch-action: pan-x;
+}
+
+.eq-band {
+  @apply flex flex-col items-center flex-none w-10 h-full md:w-12 lg:flex-1 lg:min-w-[36px];
+}
+
+.eq-band-slider-container {
+  @apply relative flex-1 w-full flex flex-col items-center py-2;
+}
+
+.eq-band-label-container {
+  @apply mt-4 flex flex-col items-center gap-1.5;
+}
+
+.eq-band-freq {
+  @apply text-[10px] font-bold text-zinc-500 uppercase tracking-tighter;
+}
+
+.eq-band-value {
+  @apply text-[11px] font-mono font-bold text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20 min-w-[32px] text-center;
+}
+
+/* Convolver Specific */
+.convolver-file-info {
+  @apply bg-zinc-800/50 rounded-lg p-3 border border-zinc-800;
+}
+
+.convolver-file-label {
+  @apply block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2;
+}
+
+.convolver-file-name {
+  @apply text-sm text-zinc-300 overflow-hidden text-ellipsis whitespace-nowrap font-mono;
+}
+
+/* Sound Position Specific */
+.sound-pos-container {
+  @apply space-y-6;
+}
+
+.sound-pos-group {
+  @apply space-y-4;
+}
+
+.sound-pos-header {
+  @apply flex items-center gap-2 mb-2;
+}
+
+.sound-pos-label {
+  @apply text-xs font-bold text-zinc-500 uppercase tracking-widest;
+}
+
+.sound-pos-divider {
+  @apply border-t border-zinc-800/50 pt-4;
+}
+
+/* Custom Scrollbar Styles (without @apply loop) */
+.eq-settings-panel::-webkit-scrollbar,
+.eq-visualizer-content::-webkit-scrollbar,
 ::-webkit-scrollbar {
-  @apply w-1.5 h-1.5;
+  width: 6px;
+  height: 6px;
+}
+
+.eq-settings-panel::-webkit-scrollbar-track,
+.eq-visualizer-content::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-zinc-950;
+  background: #09090b;
 }
 
+.eq-settings-panel::-webkit-scrollbar-thumb,
+.eq-visualizer-content::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-800 rounded-full hover:bg-zinc-700 transition-colors;
+  background: #27272a;
+  border-radius: 9999px;
 }
 
-/* Vertical slider fix */
+.eq-settings-panel::-webkit-scrollbar-thumb:hover,
+.eq-visualizer-content::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Vertical slider */
 .vertical-slider {
   -webkit-appearance: slider-vertical;
   writing-mode: bt-lr;
+  touch-action: pan-x;
+}
+
+.vertical-slider::-webkit-slider-runnable-track {
+  @apply bg-zinc-800 rounded-full;
+  width: var(--track-width, 4px);
+  margin: 0 auto;
+}
+
+.vertical-slider::-moz-range-track {
+  @apply bg-zinc-800 rounded-full;
+  width: var(--track-width, 4px);
+}
+
+.vertical-slider::-webkit-slider-thumb {
+  @apply bg-blue-500 rounded-full border-2 border-zinc-950 shadow-md;
+  width: 1rem;
+  height: 1rem;
+  margin-top: -0.25rem;
 }
