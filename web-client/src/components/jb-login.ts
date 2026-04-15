@@ -33,6 +33,7 @@ export class JBLogin extends LitElement {
       <div class="login-container">
         <div class="login-card">
           <div class="login-header">
+            <img src="/logo.png" alt="Logo" class="login-logo" />
             <h1 class="login-title">James Bond</h1>
             <p class="login-subtitle">Sign in to manage JamesDSP</p>
           </div>

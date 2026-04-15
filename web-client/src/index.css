@@ -50,12 +50,24 @@ jb-button.w-full {
 }
 
 .app-logo-section {
-  @apply space-y-1;
+  @apply flex items-center gap-4;
+}
+
+.app-logo {
+  @apply w-24 h-24 rounded-lg object-cover border border-amber-500/20 shadow-lg shadow-amber-500/5;
+}
+
+.app-title-group {
+  @apply flex flex-col;
 }
 
 .app-title {
   @apply text-3xl md:text-4xl font-black tracking-tighter uppercase italic;
-  color: var(--color-accent-primary);
+  background: linear-gradient(to bottom, #fffbeb 0%, var(--color-accent-primary) 50%, #92400e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 12px rgba(245, 158, 11, 0.4));
+  line-height: 1.1;
 }
 
 .app-subtitle {
@@ -123,12 +135,20 @@ jb-button.w-full {
 }
 
 .login-header {
-  @apply mb-8 text-center;
+  @apply mb-8 text-center flex flex-col items-center;
+}
+
+.login-logo {
+  @apply w-32 h-32 rounded-xl object-cover mb-6 border border-amber-500/20 shadow-2xl;
 }
 
 .login-title {
-  @apply text-3xl font-black tracking-tighter uppercase italic mb-2;
-  color: var(--color-accent-primary);
+  @apply text-3xl md:text-4xl font-black tracking-tighter uppercase italic mb-2;
+  background: linear-gradient(to bottom, #fffbeb 0%, var(--color-accent-primary) 50%, #92400e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 2px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 15px rgba(245, 158, 11, 0.5));
+  line-height: 1.1;
 }
 
 .login-subtitle {

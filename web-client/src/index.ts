@@ -78,8 +78,11 @@ export class JamesBondApp extends LitElement {
       <div class="app-container">
         <header class="app-header">
           <div class="app-logo-section">
-            <h1 class="app-title">James Bond</h1>
-            <p class="app-subtitle">Bridges the gap between JamesDSP and the web.</p>
+            <img src="/logo.png" alt="James Bond Logo" class="app-logo" />
+            <div class="app-title-group">
+              <h1 class="app-title">James Bond</h1>
+              <p class="app-subtitle">Bridges the gap between JamesDSP and the web.</p>
+            </div>
           </div>
           <div class="app-status-bar">
             ${this.masterConfig ? html`
