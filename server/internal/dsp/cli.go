@@ -122,7 +122,11 @@ func parseKeyValues(s string) map[string]string {
 	for _, line := range strings.Split(s, "\n") {
 		parts := strings.SplitN(line, "=", 2)
 		if len(parts) == 2 {
-			result[strings.TrimSpace(parts[0])] = strings.TrimSpace(parts[1])
+			k := strings.TrimSpace(parts[0])
+			v := strings.TrimSpace(parts[1])
+			// Remove surrounding quotes if present
+			v = strings.Trim(v, "\"")
+			result[k] = v
 		}
 	}
 	return result
