@@ -46,7 +46,7 @@ export class DSPConvolver extends LitElement {
 
           <jb-select 
             label="Optimization Mode" 
-            .value=${this.config.optimization_mode.toString()} 
+            .value=${(this.config.optimization_mode ?? 0).toString()} 
             .options=${[
               { label: 'Original', value: 0 },
               { label: 'Shrink', value: 1 },

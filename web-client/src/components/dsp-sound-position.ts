@@ -67,7 +67,7 @@ export class DSPSoundPosition extends LitElement {
 
             <jb-select 
               label="Mode" 
-              .value=${this.config.crossfeed_mode.toString()} 
+              .value=${(this.config.crossfeed_mode ?? 0).toString()} 
               .disabled=${!this.config.crossfeed_enabled}
               .options=${crossfeedOptions}
               @change=${(e: CustomEvent<string>) => this._onChange({ crossfeed_mode: parseInt(e.detail) })}

@@ -87,7 +87,7 @@ export class DSPEqualizer extends LitElement {
             <div class="eq-setting-item-large">
               <jb-select 
                 label="Filter Type" 
-                .value=${this.config.filter_type.toString()} 
+                .value=${(this.config.filter_type ?? 0).toString()} 
                 .options=${filterOptions}
                 @change=${(e: CustomEvent<string>) => this._update({ filter_type: parseInt(e.detail) })}
               ></jb-select>
@@ -96,7 +96,7 @@ export class DSPEqualizer extends LitElement {
             <div class="eq-setting-item-large">
               <jb-select 
                 label="Interpolation" 
-                .value=${this.config.interpolation.toString()} 
+                .value=${(this.config.interpolation ?? 0).toString()} 
                 .options=${interpOptions}
                 @change=${(e: CustomEvent<string>) => this._update({ interpolation: parseInt(e.detail) })}
               ></jb-select>
@@ -113,7 +113,7 @@ export class DSPEqualizer extends LitElement {
                       min="-12" 
                       max="12" 
                       step="0.5" 
-                      .value=${this.config.gains[i].toString()}
+                      .value=${(this.config.gains[i] ?? 0).toString()}
                       @input=${(e: Event) => this._onInputGain(i, parseFloat((e.target as HTMLInputElement).value))}
                       @change=${(e: Event) => this._onChangeGain(i, parseFloat((e.target as HTMLInputElement).value))}
                       class="vertical-slider"

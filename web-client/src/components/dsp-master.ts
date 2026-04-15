@@ -22,7 +22,7 @@ export class DSPMaster extends LitElement {
     });
   }
 
-  async _onInput(config: Partial<Master>) {
+  _onInput(config: Partial<Master>) {
     this.config = { ...this.config, ...config };
   }
 

@@ -14,7 +14,9 @@ export class DSPTube extends LitElement {
 
   async connectedCallback() {
     super.connectedCallback();
-    this.config = await dspApi.getTube();
+    const data = await dspApi.getTube();
+    // Convert raw (e.g. 200) to dB (e.g. 2.0)
+    this.config = { ...data, pre_gain: data.pre_gain / 100 };
   }
 
   _onInput(e: CustomEvent<number>) {
@@ -23,12 +25,21 @@ export class DSPTube extends LitElement {
 
   async _onChange(e: CustomEvent<number>) {
     this.config = { ...this.config, pre_gain: e.detail };
-    await dspApi.setTube(this.config);
+    await this._sync();
   }
 
   async _onToggle(e: CustomEvent<boolean>) {
     this.config = { ...this.config, enabled: e.detail };
-    await dspApi.setTube(this.config);
+    await this._sync();
+  }
+
+  private async _sync() {
+    // Convert dB back to raw integer (2.0 -> 200)
+    const payload = { 
+      ...this.config, 
+      pre_gain: Math.round(this.config.pre_gain * 100) 
+    };
+    await dspApi.setTube(payload);
   }
 
   render() {
@@ -49,10 +60,10 @@ export class DSPTube extends LitElement {
           <jb-slider 
             label="Pregain" 
             .value=${this.config.pre_gain} 
-            min="-300" 
-            max="1200" 
-            step="1" 
-            unit=""
+            min="-3" 
+            max="12" 
+            step="0.1" 
+            unit=" dB"
             @input=${this._onInput}
             @change=${this._onChange}
           ></jb-slider>

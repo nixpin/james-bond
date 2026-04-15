@@ -15,9 +15,10 @@ export class JBSlider extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   _onInput(e: Event) {
+    e.stopPropagation(); // Prevent duplicate/conflicting native events
     const input = e.target as HTMLInputElement;
     const val = parseFloat(input.value);
-    this.value = val; // Update internal value for display
+    this.value = val; // Smoother dragging
     this.dispatchEvent(new CustomEvent('input', { 
       detail: val,
       bubbles: true,
@@ -26,8 +27,10 @@ export class JBSlider extends LitElement {
   }
 
   _onChange(e: Event) {
+    e.stopPropagation(); // Prevent duplicate/conflicting native events
     const input = e.target as HTMLInputElement;
     const val = parseFloat(input.value);
+    this.value = val;
     this.dispatchEvent(new CustomEvent('change', { 
       detail: val,
       bubbles: true,
@@ -36,19 +39,20 @@ export class JBSlider extends LitElement {
   }
 
   render() {
+    const displayValue = this.value ?? 0;
     return html`
       <div class="slider-container">
         <div class="header">
           <label class="label">${this.label}</label>
-          <span class="value">${this.value}${this.unit}</span>
+          <span class="value">${displayValue}${this.unit}</span>
         </div>
         <input 
           type="range" 
           ?disabled=${this.disabled}
-          .min=${this.min.toString()} 
-          .max=${this.max.toString()} 
-          .step=${this.step.toString()} 
-          .value=${this.value.toString()}
+          .min=${(this.min ?? 0).toString()} 
+          .max=${(this.max ?? 100).toString()} 
+          .step=${(this.step ?? 1).toString()} 
+          .value=${displayValue.toString()}
           @input=${this._onInput}
           @change=${this._onChange}
         />
