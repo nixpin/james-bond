@@ -3,6 +3,7 @@ import { customElement, state } from 'lit/decorators.js';
 import { dspApi, Equalizer } from '../dsp-api';
 import './jb-toggle';
 import './jb-select';
+import './jb-button';
 
 @customElement('dsp-equalizer')
 export class DSPEqualizer extends LitElement {
@@ -35,6 +36,14 @@ export class DSPEqualizer extends LitElement {
     await dspApi.setEqualizer(this.config);
   }
 
+  async _resetEq() {
+    if (!confirm('Are you sure you want to reset all EQ parameters?')) return;
+    
+    const resetGains = this.config.gains.map(() => 0);
+    this.config = { ...this.config, gains: resetGains };
+    await dspApi.setEqualizer(this.config);
+  }
+
   render() {
     const filterOptions = [
       { label: 'FIR Minimum Phase', value: 0 },
@@ -52,9 +61,19 @@ export class DSPEqualizer extends LitElement {
 
     return html`
       <div class="jb-card col-span-1 md:col-span-2">
-        <header class="card-header">
-          <div class="card-indicator"></div>
-          <h3 class="card-title text-lg">Parametric Equalizer</h3>
+        <header class="card-header flex justify-between items-center">
+          <div class="flex items-center gap-2">
+            <div class="card-indicator"></div>
+            <h3 class="card-title text-lg">Parametric Equalizer</h3>
+          </div>
+          <jb-button 
+            variant="secondary" 
+            class="text-xs" 
+            ?disabled=${!this.config.enabled}
+            @click=${this._resetEq}
+          >
+            Reset EQ
+          </jb-button>
         </header>
         
         <jb-toggle 
