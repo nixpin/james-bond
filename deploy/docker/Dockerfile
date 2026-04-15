@@ -50,6 +50,7 @@ LABEL maintainer="Sergey Gri"
 
 ARG UID=1000
 ARG GID=1000
+ARG JB_JAMESDSP_BIN=jamesdsp-headless
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -63,7 +64,7 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=jdsp-builder /src/build/src/jamesdsp /usr/local/bin/jamesdsp-headless
+COPY --from=jdsp-builder /src/build/src/jamesdsp /usr/local/bin/${JB_JAMESDSP_BIN}
 COPY --from=server-builder /server /usr/local/bin/james-bond-server
 
 # Create user matching host PUID/PGID (default 1000:1000)
@@ -78,8 +79,9 @@ USER ${UID}
 ENV XDG_RUNTIME_DIR=/tmp/runtime
 ENV PIPEWIRE_RUNTIME_DIR=/run/user/${UID}
 ENV JB_DATA_DIR=/app/data
+ENV JB_JAMESDSP_BIN=${JB_JAMESDSP_BIN}
 
 EXPOSE 8080
 
 # Start a private D-Bus session, then launch JamesDSP in background and the server in foreground
-CMD ["sh", "-c", "eval $(dbus-launch --sh-syntax) && (jamesdsp-headless --watch &) && exec james-bond-server"]
+CMD ["sh", "-c", "eval $(dbus-launch --sh-syntax) && (${JB_JAMESDSP_BIN} --watch &) && exec james-bond-server"]

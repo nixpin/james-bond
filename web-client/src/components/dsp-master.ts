@@ -15,20 +15,21 @@ export class DSPMaster extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     this.config = await dspApi.getMaster();
+    
+    // Sync logic for bypass changes from other components
+    window.addEventListener('jb-master-change', (e: any) => {
+      this.config = e.detail;
+    });
   }
 
-  _onInput(config: Partial<Master>) {
+  async _onInput(config: Partial<Master>) {
     this.config = { ...this.config, ...config };
   }
 
   async _onChange(config: Partial<Master>) {
     this.config = { ...this.config, ...config };
     await dspApi.setMaster(this.config);
-  }
-
-  async _onToggle(e: CustomEvent<boolean>) {
-    this.config = { ...this.config, enabled: e.detail };
-    await dspApi.setMaster(this.config);
+    window.dispatchEvent(new CustomEvent('jb-master-change', { detail: this.config }));
   }
 
   render() {
@@ -38,12 +39,6 @@ export class DSPMaster extends LitElement {
           <div class="card-indicator"></div>
           <h3 class="card-title">Master & Limiter</h3>
         </header>
-        
-        <jb-toggle 
-          label="Enable" 
-          .enabled=${this.config.enabled} 
-          @change=${this._onToggle}
-        ></jb-toggle>
 
         <div class="space-y-6" ?inert=${!this.config.enabled}>
           <jb-slider 

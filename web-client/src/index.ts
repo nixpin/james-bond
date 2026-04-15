@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
-import { dspApi } from './dsp-api';
+import { dspApi, Master } from './dsp-api';
 import './components/dsp-bass';
 import './components/dsp-master';
 import './components/dsp-tube';
@@ -9,23 +9,60 @@ import './components/dsp-equalizer';
 import './components/dsp-sound-position';
 import './components/jb-login';
 import './components/jb-button';
+import './components/jb-toggle';
 
 @customElement('james-bond-app')
 export class JamesBondApp extends LitElement {
   @state() private authenticated = dspApi.isAuthenticated();
+  @state() private masterConfig?: Master;
 
   protected createRenderRoot() {
     return this; // For Tailwind integration
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('jb-auth-change', () => {
+    window.addEventListener('jb-auth-change', async () => {
       this.authenticated = dspApi.isAuthenticated();
+      if (this.authenticated) {
+        await this._fetchMaster();
+      }
     });
     window.addEventListener('jb-unauthorized', () => {
       this.authenticated = false;
     });
+    
+    // Sync logic for bypass changes from other components
+    window.addEventListener('jb-master-change', (e: any) => {
+      this.masterConfig = e.detail;
+    });
+
+    if (this.authenticated) {
+      await this._fetchMaster();
+    }
+  }
+
+  async _fetchMaster() {
+    try {
+      this.masterConfig = await dspApi.getMaster();
+    } catch (e) {
+      console.error('Failed to fetch master config', e);
+    }
+  }
+
+  async _onBypassToggle(e: CustomEvent<boolean>) {
+    if (!this.masterConfig) return;
+    
+    // Bypass ON means Enabled OFF
+    const newEnabled = !e.detail;
+    this.masterConfig = { ...this.masterConfig, enabled: newEnabled };
+    
+    try {
+      await dspApi.setMaster(this.masterConfig);
+      window.dispatchEvent(new CustomEvent('jb-master-change', { detail: this.masterConfig }));
+    } catch (err) {
+      console.error('Failed to toggle bypass', err);
+    }
   }
 
   _logout() {
@@ -45,6 +82,15 @@ export class JamesBondApp extends LitElement {
             <p class="app-subtitle">Bridges the gap between JamesDSP and the web.</p>
           </div>
           <div class="app-status-bar">
+            ${this.masterConfig ? html`
+              <div class="bypass-control">
+                <jb-toggle 
+                  label="Bypass" 
+                  .enabled=${!this.masterConfig.enabled} 
+                  @change=${this._onBypassToggle}
+                ></jb-toggle>
+              </div>
+            ` : ''}
             <div class="status-indicator">
               <span class="status-dot"></span>
               <span class="status-text">Connected</span>
