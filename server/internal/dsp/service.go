@@ -2,6 +2,7 @@ package dsp
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -85,14 +86,26 @@ func (s *Service) GetEqualizer() (*Equalizer, error) {
 
 	rawEQ := params[ParamToneEQ]
 	parts := strings.Split(rawEQ, ";")
-	half := len(parts) / 2
 
+	// Filter out empty strings (e.g., from trailing ;) and trim whitespace
+	var cleanParts []string
+	for _, p := range parts {
+		if t := strings.TrimSpace(p); t != "" {
+			cleanParts = append(cleanParts, t)
+		}
+	}
+
+	half := len(cleanParts) / 2
 	bands := make([]float64, 0, half)
 	gains := make([]float64, 0, half)
 
 	for i := 0; i < half; i++ {
-		bands = append(bands, parseFloat(parts[i]))
-		gains = append(gains, parseFloat(parts[i+half]))
+		bands = append(bands, parseFloat(cleanParts[i]))
+		
+		gain := parseFloat(cleanParts[i+half])
+		// Round to 1 decimal place
+		roundedGain := math.Round(gain*10) / 10
+		gains = append(gains, roundedGain)
 	}
 
 	return &Equalizer{
