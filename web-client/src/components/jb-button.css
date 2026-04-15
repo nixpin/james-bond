@@ -35,28 +35,28 @@ button:active {
 }
 
 button:focus-visible {
-  box-shadow: 0 0 0 2px #09090b, 0 0 0 4px currentColor;
+  box-shadow: 0 0 0 2px var(--color-bg-base), 0 0 0 4px var(--color-accent-primary);
 }
 
 /* Variant Styles using host attributes */
 :host([variant="primary"]) button {
-  background-color: #2563eb;
-  color: #ffffff;
-  box-shadow: 0 4px 6px -1px rgba(30, 58, 138, 0.2);
+  background-color: var(--color-accent-primary);
+  color: var(--color-bg-base);
+  box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.2);
 }
 
 :host([variant="primary"]) button:hover {
-  background-color: #3b82f6;
+  background-color: var(--color-accent-from);
 }
 
 :host([variant="secondary"]) button {
-  background-color: #27272a;
-  color: #f4f4f5;
-  border: 1px solid #3f3f46;
+  background-color: var(--color-surface-raised);
+  color: var(--color-text-base);
+  border: 1px solid var(--color-border-strong);
 }
 
 :host([variant="secondary"]) button:hover {
-  background-color: #3f3f46;
+  background-color: var(--color-surface-glass-hover);
 }
 
 :host([variant="danger"]) button {
@@ -66,7 +66,7 @@ button:focus-visible {
 }
 
 :host([variant="danger"]) button:hover {
-  background-color: #ef4444;
+  background-color: var(--color-status-error);
 }
 
 /* Disabled state */

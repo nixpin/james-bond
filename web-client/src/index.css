@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./theme.css";
 
 @theme {
   --color-zinc-925: #121214;
@@ -9,7 +10,12 @@
 }
 
 body {
-  @apply bg-zinc-950 text-zinc-100 min-h-screen font-sans antialiased;
+  background-color: var(--color-bg-base);
+  color: var(--color-text-base);
+  min-height: 100vh;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Base styles for custom components */
@@ -39,7 +45,8 @@ jb-button.w-full {
 }
 
 .app-header {
-  @apply mb-8 md:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-zinc-800 pb-6 gap-4;
+  @apply mb-8 md:mb-10 flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 gap-4;
+  border-bottom: 1px solid var(--color-border-strong);
 }
 
 .app-logo-section {
@@ -47,11 +54,13 @@ jb-button.w-full {
 }
 
 .app-title {
-  @apply text-3xl md:text-4xl font-black text-blue-500 tracking-tighter uppercase italic;
+  @apply text-3xl md:text-4xl font-black tracking-tighter uppercase italic;
+  color: var(--color-accent-primary);
 }
 
 .app-subtitle {
-  @apply text-zinc-500 font-medium text-sm md:text-base;
+  color: var(--color-text-muted);
+  @apply font-medium text-sm md:text-base;
 }
 
 .app-status-bar {
@@ -59,15 +68,19 @@ jb-button.w-full {
 }
 
 .status-indicator {
-  @apply flex items-center gap-2 bg-zinc-900 px-3 py-1.5 rounded-full border border-zinc-800;
+  @apply flex items-center gap-2 px-3 py-1.5 rounded-full;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-strong);
 }
 
 .status-dot {
-  @apply inline-flex h-2 w-2 rounded-full bg-green-500 animate-pulse;
+  @apply inline-flex h-2 w-2 rounded-full animate-pulse;
+  background-color: var(--color-status-success);
 }
 
 .status-text {
-  @apply text-xs font-bold text-zinc-400 uppercase tracking-wider;
+  @apply text-xs font-bold uppercase tracking-wider;
+  color: var(--color-text-dim);
 }
 
 .main-content {
@@ -79,7 +92,8 @@ jb-button.w-full {
 }
 
 .section-icon {
-  @apply w-5 h-5 text-blue-500;
+  @apply w-5 h-5;
+  color: var(--color-accent-primary);
 }
 
 .dsp-grid {
@@ -87,16 +101,21 @@ jb-button.w-full {
 }
 
 .app-footer {
-  @apply mt-20 border-t border-zinc-800 pt-6 text-center text-sm text-zinc-600 font-medium;
+  @apply mt-20 pt-6 text-center text-sm font-medium;
+  border-top: 1px solid var(--color-border-strong);
+  color: var(--color-text-muted);
 }
 
 /* Login Page */
 .login-container {
-  @apply min-h-screen flex items-center justify-center bg-zinc-950 p-4;
+  @apply min-h-screen flex items-center justify-center p-4;
+  background-color: var(--color-bg-base);
 }
 
 .login-card {
-  @apply max-w-md w-full bg-zinc-900 border border-zinc-800 rounded-xl p-6 sm:p-8 shadow-2xl;
+  @apply max-w-md w-full rounded-xl p-6 sm:p-8 shadow-2xl;
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border-strong);
 }
 
 .login-header {
@@ -104,11 +123,13 @@ jb-button.w-full {
 }
 
 .login-title {
-  @apply text-3xl font-black text-blue-500 tracking-tighter uppercase italic mb-2;
+  @apply text-3xl font-black tracking-tighter uppercase italic mb-2;
+  color: var(--color-accent-primary);
 }
 
 .login-subtitle {
-  @apply text-zinc-500 text-sm;
+  color: var(--color-text-muted);
+  @apply text-sm;
 }
 
 .login-form {
@@ -120,15 +141,26 @@ jb-button.w-full {
 }
 
 .form-label {
-  @apply block text-sm font-medium text-zinc-400;
+  @apply block text-sm font-medium;
+  color: var(--color-text-dim);
 }
 
 .form-input {
-  @apply block w-full rounded-lg border-0 bg-zinc-800 py-2.5 px-4 text-zinc-100 ring-1 ring-inset ring-zinc-700 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm;
+  @apply block w-full rounded-lg border-0 py-2.5 px-4 sm:text-sm;
+  background-color: var(--color-surface-input);
+  color: var(--color-text-base);
+  box-shadow: inset 0 0 0 1px var(--color-surface-input-ring);
+}
+
+.form-input:focus {
+  box-shadow: inset 0 0 0 2px var(--color-accent-primary);
 }
 
 .login-error {
-  @apply bg-red-900/20 border border-red-900/50 text-red-400 text-xs p-3 rounded-lg flex items-center gap-2;
+  @apply text-xs p-3 rounded-lg flex items-center gap-2;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: var(--color-status-error);
 }
 
 .error-icon {
@@ -137,24 +169,33 @@ jb-button.w-full {
 
 /* Base card style */
 .jb-card {
-  @apply bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm flex flex-col gap-6;
+  @apply rounded-xl p-5 md:p-6 shadow-sm flex flex-col gap-6;
+  background-color: var(--color-surface-glass);
+  border: 1px solid var(--color-border-premium);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .card-header {
-  @apply flex items-center gap-2 border-b border-zinc-800 pb-3;
+  @apply flex items-center gap-2 pb-3;
+  border-bottom: 1px solid var(--color-border-premium);
 }
 
 .card-indicator {
-  @apply w-2 h-6 bg-blue-500 rounded-full;
+  @apply w-2 h-6 rounded-full;
+  background-color: var(--color-accent-primary);
 }
 
 .card-title {
-  @apply font-bold text-zinc-100 tracking-tight;
+  @apply font-bold tracking-tight;
+  color: var(--color-text-base);
 }
 
 /* Equalizer Specific */
 .eq-settings-panel {
-  @apply flex overflow-x-auto gap-6 mb-8 bg-zinc-800/20 p-4 rounded-xl border border-zinc-800/50 md:grid md:grid-cols-3 md:overflow-visible;
+  @apply flex overflow-x-auto gap-6 mb-8 p-4 rounded-xl md:grid md:grid-cols-3 md:overflow-visible;
+  background-color: var(--color-surface-sunken);
+  border: 1px solid var(--color-border-premium);
 }
 
 .eq-setting-item {
@@ -166,7 +207,9 @@ jb-button.w-full {
 }
 
 .eq-visualizer-container {
-  @apply relative w-full overflow-hidden bg-zinc-950/30 rounded-xl border border-zinc-800/50 p-4;
+  @apply relative w-full overflow-hidden rounded-xl p-4;
+  background-color: var(--color-surface-sunken);
+  border: 1px solid var(--color-border-premium);
 }
 
 .eq-visualizer-content {
@@ -187,24 +230,32 @@ jb-button.w-full {
 }
 
 .eq-band-freq {
-  @apply text-[10px] font-bold text-zinc-500 uppercase tracking-tighter;
+  @apply text-[10px] font-bold uppercase tracking-tighter;
+  color: var(--color-text-muted);
 }
 
 .eq-band-value {
-  @apply text-[11px] font-mono font-bold text-blue-400 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20 min-w-[32px] text-center;
+  @apply text-[11px] font-mono font-bold px-1.5 py-0.5 rounded min-w-[32px] text-center;
+  color: var(--color-accent-light);
+  background-color: var(--color-accent-subtle);
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 /* Convolver Specific */
 .convolver-file-info {
-  @apply bg-zinc-800/50 rounded-lg p-3 border border-zinc-800 transition-all;
+  @apply rounded-lg p-3 transition-all;
+  background-color: var(--color-surface-sunken);
+  border: 1px solid var(--color-border-premium);
 }
 
 .convolver-file-label {
-  @apply block text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2;
+  @apply block text-xs font-bold uppercase tracking-wider mb-2;
+  color: var(--color-text-muted);
 }
 
 .convolver-file-name {
-  @apply text-sm text-zinc-300 overflow-hidden text-ellipsis whitespace-nowrap font-mono;
+  @apply text-sm overflow-hidden text-ellipsis whitespace-nowrap font-mono;
+  color: var(--color-text-dim);
 }
 
 /* Sound Position Specific */
@@ -221,11 +272,13 @@ jb-button.w-full {
 }
 
 .sound-pos-label {
-  @apply text-xs font-bold text-zinc-500 uppercase tracking-widest;
+  @apply text-xs font-bold uppercase tracking-widest;
+  color: var(--color-text-muted);
 }
 
 .sound-pos-divider {
-  @apply border-t border-zinc-800/50 pt-4;
+  @apply pt-4;
+  border-top: 1px solid var(--color-border-premium);
 }
 
 /* Custom Scrollbar Styles */
@@ -235,16 +288,16 @@ jb-button.w-full {
 }
 
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: var(--color-bg-base);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: var(--color-scrollbar-thumb);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: var(--color-scrollbar-hover);
 }
 
 /* Vertical slider fix (Standard-compliant way) */
@@ -258,31 +311,41 @@ jb-button.w-full {
   cursor: pointer;
   outline: none;
   border: none;
-  @apply accent-blue-500 appearance-none;
+  accent-color: var(--color-accent-primary);
+  appearance: none;
 }
 
 /* Custom track/thumb styling for vertical inputs 
    Note: we avoid setting height/width on pseudo-elements 
    that might conflict with writing-mode layout. */
 .vertical-slider::-webkit-slider-runnable-track {
-  @apply bg-zinc-800 rounded-full;
+  background-color: var(--color-surface-input-ring);
+  border-radius: 9999px;
   width: 4px;
 }
 
 .vertical-slider::-webkit-slider-thumb {
-  @apply appearance-none bg-blue-500 rounded-full border-2 border-zinc-950 shadow-md;
+  appearance: none;
+  background-color: var(--color-accent-primary);
+  border-radius: 9999px;
+  border: 2px solid var(--color-bg-base);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   width: 1.25rem;
   height: 1.25rem;
   margin-left: -8px; /* Alignment adjustment for vertical-lr */
 }
 
 .vertical-slider::-moz-range-track {
-  @apply bg-zinc-800 rounded-full;
+  background-color: var(--color-surface-input-ring);
+  border-radius: 9999px;
   width: 4px;
 }
 
 .vertical-slider::-moz-range-thumb {
-  @apply bg-blue-500 rounded-full border-2 border-zinc-950 shadow-md;
+  background-color: var(--color-accent-primary);
+  border-radius: 9999px;
+  border: 2px solid var(--color-bg-base);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   width: 1.25rem;
   height: 1.25rem;
 }

@@ -1,0 +1,64 @@
+/*
+ * James Bond — Theme Configuration
+ * Warm amber/stone dark theme
+ *
+ * All color tokens are defined here as CSS custom properties.
+ * Components reference these variables so the palette can be
+ * swapped in a single place.
+ */
+
+:root {
+  /* ── Background ────────────────────────────────────────── */
+  --color-bg-base: #0c0a09;
+
+  /* ── Text ──────────────────────────────────────────────── */
+  --color-text-base: #fafaf9;
+  --color-text-dim: #a8a29e;
+  --color-text-muted: #78716c;
+
+  /* ── Accent ────────────────────────────────────────────── */
+  --color-accent-primary: #f59e0b;
+  --color-accent-from: #fbbf24;
+  --color-accent-via: #f97316;
+  --color-accent-to: #d97706;
+
+  /* ── Status / Semantic ──────────────────────────────────── */
+  --color-status-error: #ef4444;
+  --color-status-warning: #f59e0b;
+  --color-status-success: #10b981;
+
+  /* ── Surfaces / Overlays ────────────────────────────────── */
+  --color-surface-glass: rgba(28, 25, 23, 0.4);
+  --color-surface-glass-hover: rgba(41, 37, 36, 0.6);
+  --color-surface-glow-primary: rgba(245, 158, 11, 0.1);
+  --color-surface-glow-secondary: rgba(249, 115, 22, 0.05);
+
+  /* ── Borders / Dividers ─────────────────────────────────── */
+  --color-border-premium: rgba(250, 250, 249, 0.05);
+  --color-border-strong: rgba(250, 250, 249, 0.1);
+
+  /* ── Skeleton / Loading ─────────────────────────────────── */
+  --color-skeleton-base: rgba(28, 25, 23, 0.5);
+  --color-skeleton-shimmer-1: #1c1917;
+  --color-skeleton-shimmer-2: #292524;
+  --color-skeleton-content-1: rgba(250, 250, 249, 0.1);
+  --color-skeleton-content-2: rgba(250, 250, 249, 0.05);
+
+  /* ── Scrollbar ──────────────────────────────────────────── */
+  --color-scrollbar-thumb: #a8a29e;
+  --color-scrollbar-hover: #d6d3d1;
+
+  /* ── Derived Tokens (computed from the primitives above) ── */
+  /* Surface tones — used for cards, inputs, panels            */
+  --color-surface-raised: #1c1917;
+  --color-surface-sunken: rgba(28, 25, 23, 0.3);
+  --color-surface-input: #1c1917;
+  --color-surface-input-ring: #292524;
+
+  /* Interactive / focus */
+  --color-focus-ring: var(--color-accent-primary);
+
+  /* Accent lighter (hover states, badges) */
+  --color-accent-light: #fbbf24;
+  --color-accent-subtle: rgba(245, 158, 11, 0.15);
+}

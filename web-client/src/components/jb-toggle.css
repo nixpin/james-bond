@@ -12,7 +12,7 @@
 .label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #d4d4d8;
+  color: var(--color-text-dim);
   user-select: none;
 }
 
@@ -25,20 +25,20 @@
   flex-shrink: 0;
   cursor: pointer;
   border-radius: 9999px;
-  border: 1px solid #3f3f46;
-  background-color: #27272a;
+  border: 1px solid var(--color-border-strong);
+  background-color: var(--color-surface-raised);
   transition: all 200ms ease-in-out;
   outline: none;
   padding: 2px;
 }
 
 .switch:focus-visible {
-  box-shadow: 0 0 0 2px #09090b, 0 0 0 4px #2563eb;
+  box-shadow: 0 0 0 2px var(--color-bg-base), 0 0 0 4px var(--color-accent-primary);
 }
 
 .switch[aria-checked="true"] {
-  background-color: #2563eb;
-  border-color: #3b82f6;
+  background-color: var(--color-accent-primary);
+  border-color: var(--color-accent-from);
 }
 
 .switch[disabled] {

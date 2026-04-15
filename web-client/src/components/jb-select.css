@@ -12,7 +12,7 @@ label {
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #d4d4d8;
+  color: var(--color-text-dim);
   margin-bottom: 0.25rem;
 }
 
@@ -21,10 +21,10 @@ select {
   width: 100%;
   border-radius: 0.375rem;
   border: 0;
-  background-color: #27272a;
+  background-color: var(--color-surface-input);
   padding: 0.375rem 0.75rem;
-  color: #f4f4f5;
-  box-shadow: inset 0 0 0 1px #3f3f46;
+  color: var(--color-text-base);
+  box-shadow: inset 0 0 0 1px var(--color-surface-input-ring);
   outline: none;
   font-size: 0.875rem;
   line-height: 1.5rem;
@@ -32,7 +32,7 @@ select {
 }
 
 select:focus {
-  box-shadow: inset 0 0 0 2px #2563eb;
+  box-shadow: inset 0 0 0 2px var(--color-accent-primary);
 }
 
 /* Disabled state */

@@ -17,19 +17,19 @@
 .label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #d4d4d8;
+  color: var(--color-text-dim);
 }
 
 .value {
   font-size: 0.875rem;
   font-family: monospace;
-  color: #a1a1aa;
+  color: var(--color-text-muted);
 }
 
 input[type="range"] {
   width: 100%;
   height: 0.5rem;
-  background-color: #3f3f46;
+  background-color: var(--color-surface-input-ring);
   border-radius: 0.5rem;
   appearance: none;
   cursor: pointer;
@@ -41,24 +41,24 @@ input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 1.5rem;
   height: 1.5rem;
-  background-color: #3b82f6;
+  background-color: var(--color-accent-primary);
   border-radius: 9999px;
   cursor: pointer;
   transition: all 200ms;
-  border: 2px solid #18181b;
+  border: 2px solid var(--color-bg-base);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
-  background-color: #60a5fa;
+  background-color: var(--color-accent-from);
   transform: scale(1.1);
 }
 
 input[type="range"]::-moz-range-thumb {
   width: 1.5rem;
   height: 1.5rem;
-  background-color: #3b82f6;
-  border: 2px solid #18181b;
+  background-color: var(--color-accent-primary);
+  border: 2px solid var(--color-bg-base);
   border-radius: 9999px;
   cursor: pointer;
   transition: all 200ms;
@@ -66,7 +66,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 input[type="range"]::-moz-range-thumb:hover {
-  background-color: #60a5fa;
+  background-color: var(--color-accent-from);
   transform: scale(1.1);
 }
 

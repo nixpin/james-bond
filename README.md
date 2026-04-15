@@ -2,6 +2,12 @@
 
 James Bond is a lightweight management suite for **JamesDSP headless**. It bridges the gap between the JamesDSP CLI and the web, providing a central server for authentication, preset management, and a visual control interface.
 
+## Screenshots
+![equalizer](docs/screenshot-01.png)
+
+## Road Map
+*will be added as implementation progresses*
+
 ## Core Components
 
 ### 🏗️ Backend (dsp-control-server)
