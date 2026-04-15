@@ -19,7 +19,9 @@ body {
 }
 
 /* Base styles for custom components */
-jb-toggle, jb-slider, jb-select {
+jb-toggle,
+jb-slider,
+jb-select {
   @apply block w-full;
 }
 
@@ -72,7 +74,9 @@ jb-button.w-full {
 
 .app-subtitle {
   color: var(--color-text-muted);
-  @apply font-medium text-sm md:text-base;
+  @apply font-normal text-sm md:text-base;
+  line-height: 1.1;
+  font-style: italic;
 }
 
 .app-status-bar {
@@ -153,7 +157,8 @@ jb-button.w-full {
 
 .login-subtitle {
   color: var(--color-text-muted);
-  @apply text-sm;
+  @apply text-sm font-normal;
+  line-height: 1.1;
 }
 
 .login-form {
@@ -356,7 +361,8 @@ jb-button.w-full {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   width: 1.25rem;
   height: 1.25rem;
-  margin-left: -8px; /* Alignment adjustment for vertical-lr */
+  margin-left: -8px;
+  /* Alignment adjustment for vertical-lr */
 }
 
 .vertical-slider::-moz-range-track {
