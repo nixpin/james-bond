@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"os/exec"
 	"strings"
+	"sync"
 )
 
 // CLIClient implements IDSPClient by executing the jamesdsp binary.
 type CLIClient struct {
-	bin string // path to jamesdsp binary
+	bin string     // path to jamesdsp binary
+	mu  sync.Mutex // lock to prevent overlapping command execution
 }
 
 // NewCLIClient creates a CLIClient using the given binary path.
@@ -66,6 +68,9 @@ func (c *CLIClient) ListKeys() ([]string, error) {
 
 // run executes the command and returns only the error.
 func (c *CLIClient) run(args ...string) error {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
 	cmd := exec.Command(c.bin, args...)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
@@ -82,6 +87,9 @@ func (c *CLIClient) run(args ...string) error {
 
 // output executes the command and returns stdout as a string.
 func (c *CLIClient) output(args ...string) (string, error) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
 	cmd := exec.Command(c.bin, args...)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout

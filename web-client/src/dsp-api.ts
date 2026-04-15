@@ -81,6 +81,14 @@ function authFetch(url: string, options: RequestInit = {}) {
   return fetch(url, { ...options, headers });
 }
 
+let _queue: Promise<any> = Promise.resolve();
+
+function enqueue<T>(task: () => Promise<T>): Promise<T> {
+  const next = _queue.catch(() => {}).then(task);
+  _queue = next;
+  return next as Promise<T>;
+}
+
 export const dspApi = {
   isAuthenticated: () => !!localStorage.getItem(STORAGE_KEY),
 
@@ -102,44 +110,44 @@ export const dspApi = {
   },
 
   getBass: () => authFetch(`${API_BASE}/bass`).then(res => handleResponse<BassBoost>(res)),
-  setBass: (data: BassBoost) => authFetch(`${API_BASE}/bass`, {
+  setBass: (data: BassBoost) => enqueue(() => authFetch(`${API_BASE}/bass`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(res => handleResponse<BassBoost>(res)),
+  }).then(res => handleResponse<BassBoost>(res))),
 
   getMaster: () => authFetch(`${API_BASE}/master`).then(res => handleResponse<Master>(res)),
-  setMaster: (data: Master) => authFetch(`${API_BASE}/master`, {
+  setMaster: (data: Master) => enqueue(() => authFetch(`${API_BASE}/master`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(res => handleResponse<Master>(res)),
+  }).then(res => handleResponse<Master>(res))),
 
   getEqualizer: () => authFetch(`${API_BASE}/equalizer`).then(res => handleResponse<Equalizer>(res)),
-  setEqualizer: (data: Equalizer) => authFetch(`${API_BASE}/equalizer`, {
+  setEqualizer: (data: Equalizer) => enqueue(() => authFetch(`${API_BASE}/equalizer`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(res => handleResponse<Equalizer>(res)),
+  }).then(res => handleResponse<Equalizer>(res))),
 
   getTube: () => authFetch(`${API_BASE}/tube`).then(res => handleResponse<Tube>(res)),
-  setTube: (data: Tube) => authFetch(`${API_BASE}/tube`, {
+  setTube: (data: Tube) => enqueue(() => authFetch(`${API_BASE}/tube`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(res => handleResponse<Tube>(res)),
+  }).then(res => handleResponse<Tube>(res))),
 
   getConvolver: () => authFetch(`${API_BASE}/convolver`).then(res => handleResponse<Convolver>(res)),
-  setConvolver: (data: Convolver) => authFetch(`${API_BASE}/convolver`, {
+  setConvolver: (data: Convolver) => enqueue(() => authFetch(`${API_BASE}/convolver`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(res => handleResponse<Convolver>(res)),
+  }).then(res => handleResponse<Convolver>(res))),
 
   getSoundPosition: () => authFetch(`${API_BASE}/sound-position`).then(res => handleResponse<SoundPosition>(res)),
-  setSoundPosition: (data: SoundPosition) => authFetch(`${API_BASE}/sound-position`, {
+  setSoundPosition: (data: SoundPosition) => enqueue(() => authFetch(`${API_BASE}/sound-position`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data)
-  }).then(res => handleResponse<SoundPosition>(res)),
+  }).then(res => handleResponse<SoundPosition>(res))),
 };
